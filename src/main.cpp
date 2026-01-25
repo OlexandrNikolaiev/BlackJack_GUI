@@ -1,4 +1,4 @@
-#include "presentation/widgets/mainwindow.h"
+#include "presentation/widgets/MainWindow/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>

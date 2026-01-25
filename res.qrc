@@ -1,1 +1,26 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/images">
+        <file>res/images/green_table.png</file>
+        <file>res/images/icons/hit.png</file>
+        <file>res/images/icons/stand.png</file>
+        <file>res/images/chips/chips_10.png</file>
+        <file>res/images/chips/chips_25.png</file>
+        <file>res/images/chips/chips_50.png</file>
+        <file>res/images/chips/chips_100.png</file>
+        <file>res/images/chips/chips_500.png</file>
+        <file>res/images/chips/chips_1000.png</file>
+        <file>res/images/buttons/close.png</file>
+        <file>res/images/buttons/settings.png</file>
+        <file>res/images/buttons/close_hover.png</file>
+        <file>res/images/buttons/settings_hover.png</file>
+        <file>res/images/chips/chips_10_stack.png</file>
+        <file>res/images/chips/chips_25_stack.png</file>
+        <file>res/images/chips/chips_50_stack.png</file>
+        <file>res/images/chips/chips_100_stack.png</file>
+        <file>res/images/chips/chips_500_stack.png</file>
+        <file>res/images/chips/chips_1000_stack.png</file>
+        <file>res/images/outcomes/bust.png</file>
+        <file>res/images/outcomes/dealer_won.png</file>
+        <file>res/images/outcomes/player_won.png</file>
+    </qresource>
+</RCC>

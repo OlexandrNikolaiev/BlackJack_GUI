@@ -16,9 +16,12 @@ set(TS_FILES res/translations/BJGUI_en_150.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/presentation/widgets/mainwindow.cpp
-        src/presentation/widgets/mainwindow.h
-        src/presentation/widgets/mainwindow.ui
+        src/presentation/widgets/MainWindow/mainwindow.cpp
+        src/presentation/widgets/MainWindow/mainwindow.h
+        src/presentation/widgets/MainWindow/mainwindow.ui
+
+        src/presentation/CustomWidgets/DraggableQFrame/draggableframe.cpp
+        src/presentation/CustomWidgets/DraggableQFrame/draggableframe.h
         ${TS_FILES}
 )
 
@@ -27,6 +30,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         res.qrc
+        src/presentation/widgets/BettingPanel/bettingpanel.h src/presentation/widgets/BettingPanel/bettingpanel.cpp src/presentation/widgets/BettingPanel/bettingpanel.ui
+        src/presentation/widgets/MainWindow/temp_delete_later.ui
     )
     qt_add_translations(BJGUI
             TS_FILES ${TS_FILES}
