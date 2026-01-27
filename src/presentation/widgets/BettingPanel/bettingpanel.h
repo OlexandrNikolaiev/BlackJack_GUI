@@ -16,6 +16,7 @@ public:
     ~BettingPanel();
 
 private:
+    void applyShadowEffect();
     Ui::BettingPanel *ui;
 };
 

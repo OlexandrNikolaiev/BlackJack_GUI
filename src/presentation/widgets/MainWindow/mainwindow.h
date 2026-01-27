@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPropertyAnimation>
+#include "../BettingPanel/bettingpanel.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,11 +22,27 @@ public:
 
 protected:
     bool nativeEvent(const QByteArray &eventType, void *message, qint64 *result) override;
+    void changeEvent(QEvent* event) override;
+    void resizeEvent(QResizeEvent *event) override;
+
+private slots:
+    void showBettingPanel();
+    void hideBettingPanel();
+    void toggleBettingPanel();
 
 private:
     void ConnectSignals();
-    void CloseWindow();
     void applyShadowEffect();
+
+    void CloseWindow();
+    void CollapseWindow();
+
+    void setupBettingPanel();
+
+    QWidget *m_panelContainer;
+    BettingPanel *m_bettingPanel;
+    QPropertyAnimation *m_panelAnimation;
+    bool m_isPanelVisible;
 
     int mBorderSize;
     Ui::MainWindow *ui;

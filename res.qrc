@@ -22,5 +22,9 @@
         <file>res/images/outcomes/bust.png</file>
         <file>res/images/outcomes/dealer_won.png</file>
         <file>res/images/outcomes/player_won.png</file>
+        <file>res/images/bet_selector.png</file>
+        <file>res/images/buttons/minimize.png</file>
+        <file>res/images/buttons/minimize_hover.png</file>
+        <file>C:/Users/Jeweler228/Desktop/PNG-cards-1.3/queen_of_clubs.png</file>
     </qresource>
 </RCC>

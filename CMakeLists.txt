@@ -32,6 +32,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         res.qrc
         src/presentation/widgets/BettingPanel/bettingpanel.h src/presentation/widgets/BettingPanel/bettingpanel.cpp src/presentation/widgets/BettingPanel/bettingpanel.ui
         src/presentation/widgets/MainWindow/temp_delete_later.ui
+        src/presentation/widgets/ClickableChipStack/clickablechipstack.h src/presentation/widgets/ClickableChipStack/clickablechipstack.cpp
+        src/presentation/Styles/styles.h
+        src/presentation/Icons/icons.h
     )
     qt_add_translations(BJGUI
             TS_FILES ${TS_FILES}
