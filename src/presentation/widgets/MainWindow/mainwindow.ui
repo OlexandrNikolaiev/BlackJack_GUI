@@ -384,27 +384,21 @@ QToolButton:pressed {
                </spacer>
               </item>
               <item>
-               <widget class="QLabel" name="topChipLabel">
+               <widget class="BetStackWidget" name="betStackWidget" native="true">
                 <property name="minimumSize">
                  <size>
-                  <width>120</width>
-                  <height>120</height>
+                  <width>130</width>
+                  <height>130</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>120</width>
-                  <height>120</height>
+                  <width>130</width>
+                  <height>130</height>
                  </size>
                 </property>
                 <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">border-image: url(:/images/res/images/chips/chips_100_stack.png);</string>
-                </property>
-                <property name="text">
-                 <string/>
+                 <cursorShape>ArrowCursor</cursorShape>
                 </property>
                </widget>
               </item>
@@ -805,6 +799,12 @@ QToolButton:pressed {
    <class>DraggableFrame</class>
    <extends>QFrame</extends>
    <header>E:\qt_projects\BJGUI\src\presentation\CustomWidgets\DraggableQFrame\draggableframe.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BetStackWidget</class>
+   <extends>QWidget</extends>
+   <header>E:\qt_projects\BJGUI\src\Presentation\Widgets\BetStackWidget\betstackwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

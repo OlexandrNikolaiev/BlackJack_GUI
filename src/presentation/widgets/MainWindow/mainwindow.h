@@ -30,6 +30,10 @@ private slots:
     void hideBettingPanel();
     void toggleBettingPanel();
 
+    void onChipClicked(int value);
+    void updateBetLabel(int amount);
+    void onStackClicked();
+
 private:
     void ConnectSignals();
     void applyShadowEffect();

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "../../Styles/styles.h"
+#include "../ClickableChipStack/clickablechipstack.h"
 
 #include <QTimer>
 #include <windows.h>
@@ -25,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->settingsButton, &QPushButton::clicked, this, &MainWindow::toggleBettingPanel);
 
+    connect(ui->betStackWidget, &BetStackWidget::betChanged, this, &MainWindow::updateBetLabel);
+    connect(ui->betStackWidget, &BetStackWidget::chipRemovalRequested, this, &MainWindow::onStackClicked);
 }
 
 MainWindow::~MainWindow()
@@ -59,6 +62,24 @@ void MainWindow::setupBettingPanel()
     }
 
     m_bettingPanel = new BettingPanel(m_panelContainer);
+
+    const QStringList chipNames = {
+        "chips_10_stack",
+        "chips_25_stack",
+        "chips_50_stack",
+        "chips_100_stack",
+        "chips_500_stack",
+        "chips_1000_stack"
+    };
+
+    for (const QString &name : chipNames) {
+        auto *chipBtn = m_bettingPanel->findChild<ClickableChipStack*>(name);
+        if (chipBtn) {
+            connect(chipBtn, &ClickableChipStack::clicked, this, &MainWindow::onChipClicked);
+        } else {
+            qDebug() << "Warning: Could not find chip button with name:" << name;
+        }
+    }
 
     m_panelAnimation = new QPropertyAnimation(m_bettingPanel, "geometry", this);
     m_panelAnimation->setDuration(500);
@@ -121,33 +142,13 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qint64 
 
 void MainWindow::applyShadowEffect()
 {
-    auto makeShadow = [&]() {
-        auto *shadow = new QGraphicsDropShadowEffect(this);
-        shadow->setBlurRadius(9);
-        shadow->setOffset(0);
-        shadow->setColor(QColor(0, 0, 0, 255));
-        return shadow;
-    };
-
     Styles::Effects::applyShadow(ui->MainFrame);
     Styles::Effects::applyShadow(ui->standButton);
-    Styles::Effects::applyShadow(ui->topChipLabel);
+    Styles::Effects::applyShadow(ui->betStackWidget);
     Styles::Effects::applyShadow(ui->settingsButton);
     Styles::Effects::applyShadow(ui->hitButton);
     Styles::Effects::applyShadow(ui->collapseButton);
     Styles::Effects::applyShadow(ui->closeButton);
-
-
-    // ui->MainFrame->setGraphicsEffect(makeShadow());
-
-    // ui->standButton->setGraphicsEffect(makeShadow());
-    // ui->topChipLabel->setGraphicsEffect(makeShadow());
-    // ui->settingsButton->setGraphicsEffect(makeShadow());
-    // ui->hitButton->setGraphicsEffect(makeShadow());
-    // ui->collapseButton->setGraphicsEffect(makeShadow());
-    // ui->closeButton->setGraphicsEffect(makeShadow());
-
-
 }
 
 
@@ -242,5 +243,37 @@ void MainWindow::toggleBettingPanel()
     } else {
         showBettingPanel();
     }
+}
+
+void MainWindow::onChipClicked(int value)
+{
+    QPoint startPos = QCursor::pos();
+
+    ui->betStackWidget->addChipAnimated(value, startPos);
+}
+
+void MainWindow::updateBetLabel(int amount)
+{
+    ui->betAmountLabel->setText("$" + QString::number(amount));
+}
+
+void MainWindow::onStackClicked()
+{
+    int value = ui->betStackWidget->getTopChipValue();
+    if (value == 0) return;
+
+    QString buttonName = QString("chips_%1_stack").arg(value);
+
+    QWidget* targetBtn = m_bettingPanel->findChild<QWidget*>(buttonName);
+
+    QPoint targetGlobalPos;
+
+    if (targetBtn && targetBtn->isVisible()) {
+        targetGlobalPos = targetBtn->mapToGlobal(targetBtn->rect().center());
+    } else {
+        targetGlobalPos = ui->settingsButton->mapToGlobal(ui->settingsButton->rect().center());
+    }
+
+    ui->betStackWidget->removeTopChipAnimated(targetGlobalPos);
 }
 

@@ -35,6 +35,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/presentation/widgets/ClickableChipStack/clickablechipstack.h src/presentation/widgets/ClickableChipStack/clickablechipstack.cpp
         src/presentation/Styles/styles.h
         src/presentation/Icons/icons.h
+        src/Presentation/Widgets/MainWindow/temp2.ui
+        src/Core/deck.h src/Core/deck.cpp
+        src/Core/hand.h src/Core/hand.cpp
+        src/Core/gamerules.h src/Core/gamerules.cpp
+        src/Infrastructure/StateMachine/IGameState.h
+        src/Infrastructure/StateMachine/StateMachine.h
+        src/Infrastructure/StateMachine/States/introstate.h src/Infrastructure/StateMachine/States/introstate.cpp
+        src/Infrastructure/StateMachine/States/bettingstate.h src/Infrastructure/StateMachine/States/bettingstate.cpp
+        src/Infrastructure/Service/skinmanager.h src/Infrastructure/Service/skinmanager.cpp
+        src/Presentation/Widgets/BetStackWidget/betstackwidget.h src/Presentation/Widgets/BetStackWidget/betstackwidget.cpp
     )
     qt_add_translations(BJGUI
             TS_FILES ${TS_FILES}
