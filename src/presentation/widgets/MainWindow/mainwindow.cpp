@@ -28,6 +28,27 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->betStackWidget, &BetStackWidget::betChanged, this, &MainWindow::updateBetLabel);
     connect(ui->betStackWidget, &BetStackWidget::chipRemovalRequested, this, &MainWindow::onStackClicked);
+
+    connect(ui->givePlayerButton, &QPushButton::clicked, this, &MainWindow::onDebugDealPlayer);
+    connect(ui->giveDealerButton, &QPushButton::clicked, this, &MainWindow::onDebugDealDealer);
+
+    ui->dealerHandWidget->setAlignment(HandWidget::AlignBottom);
+
+    ui->playerHandWidget->setAlignment(HandWidget::AlignTop);
+
+    connect(ui->playerHandWidget, &HandWidget::scoreChanged, this, [this](int score){
+        ui->playerScoreLabel->setText(QString::number(score));
+
+
+    });
+
+    connect(ui->dealerHandWidget, &HandWidget::scoreChanged, this, [this](int score){
+        ui->dealerScoreLabel->setText(QString::number(score));
+    });
+
+    connect(ui->flipButton, &QPushButton::clicked, this, [this](){
+        ui->dealerHandWidget->flipCard(0);
+    });
 }
 
 MainWindow::~MainWindow()
@@ -94,6 +115,7 @@ void MainWindow::setupBettingPanel()
         }
     });
 }
+
 
 
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qint64 *result)
@@ -275,5 +297,30 @@ void MainWindow::onStackClicked()
     }
 
     ui->betStackWidget->removeTopChipAnimated(targetGlobalPos);
+}
+
+void MainWindow::onDebugDealPlayer()
+{
+    CardInfo card = m_deck.draw();
+
+    QPoint localShoePos(width() / 2, -200);
+    QPoint globalShoePos = mapToGlobal(localShoePos);
+
+    ui->playerHandWidget->addCardAnimated(card.first, card.second, globalShoePos, true);
+
+    qDebug() << "Cards left:" << m_deck.cardsLeft();
+}
+
+void MainWindow::onDebugDealDealer()
+{
+    CardInfo card = m_deck.draw();
+
+    QPoint localShoePos(width() / 2, -200);
+    QPoint globalShoePos = mapToGlobal(localShoePos);
+
+    bool isFirstCard = (ui->dealerHandWidget->getCardCount() == 0);
+    bool faceUp = !isFirstCard;
+
+    ui->dealerHandWidget->addCardAnimated(card.first, card.second, globalShoePos, faceUp);
 }
 

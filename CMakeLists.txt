@@ -45,6 +45,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Infrastructure/StateMachine/States/bettingstate.h src/Infrastructure/StateMachine/States/bettingstate.cpp
         src/Infrastructure/Service/skinmanager.h src/Infrastructure/Service/skinmanager.cpp
         src/Presentation/Widgets/BetStackWidget/betstackwidget.h src/Presentation/Widgets/BetStackWidget/betstackwidget.cpp
+        src/Core/carddata.h
+        src/Presentation/Widgets/Card/cardwidget.h src/Presentation/Widgets/Card/cardwidget.cpp
+        src/Presentation/Widgets/Hand/handwidget.h src/Presentation/Widgets/Hand/handwidget.cpp
+        src/Presentation/Widgets/MainWindow/temp3.ui
     )
     qt_add_translations(BJGUI
             TS_FILES ${TS_FILES}

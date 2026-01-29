@@ -25,6 +25,64 @@
         <file>res/images/bet_selector.png</file>
         <file>res/images/buttons/minimize.png</file>
         <file>res/images/buttons/minimize_hover.png</file>
-        <file>C:/Users/Jeweler228/Desktop/PNG-cards-1.3/queen_of_clubs.png</file>
+        <file>res/images/cards/aces.png</file>
+        <file>res/images/cards/back_cards-07.png</file>
+        <file>res/images/cards/honor_clubs.png</file>
+        <file>res/images/cards/honor_diamond.png</file>
+        <file>res/images/cards/honor_heart-14.png</file>
+        <file>res/images/cards/honors_spade-14.png</file>
+        <file>res/images/cards/52_pack_default/2_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/2_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/2_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/2_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/3_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/3_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/3_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/3_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/4_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/4_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/4_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/4_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/5_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/5_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/5_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/5_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/6_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/6_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/6_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/6_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/7_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/7_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/7_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/7_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/8_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/8_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/8_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/8_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/9_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/9_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/9_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/9_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/10_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/10_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/10_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/10_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/ace_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/ace_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/ace_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/ace_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/back.png</file>
+        <file>res/images/cards/52_pack_default/jack_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/jack_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/jack_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/jack_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/king_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/king_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/king_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/king_of_spades.png</file>
+        <file>res/images/cards/52_pack_default/queen_of_clubs.png</file>
+        <file>res/images/cards/52_pack_default/queen_of_diamonds.png</file>
+        <file>res/images/cards/52_pack_default/queen_of_hearts.png</file>
+        <file>res/images/cards/52_pack_default/queen_of_spades.png</file>
     </qresource>
 </RCC>

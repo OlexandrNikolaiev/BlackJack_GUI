@@ -3,7 +3,11 @@
 
 #include <QMainWindow>
 #include <QPropertyAnimation>
+#include <QRandomGenerator>
+
 #include "../BettingPanel/bettingpanel.h"
+#include "../../../Core/carddata.h"
+#include "../../../Core/deck.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -34,6 +38,9 @@ private slots:
     void updateBetLabel(int amount);
     void onStackClicked();
 
+    void onDebugDealPlayer();
+    void onDebugDealDealer();
+
 private:
     void ConnectSignals();
     void applyShadowEffect();
@@ -42,6 +49,8 @@ private:
     void CollapseWindow();
 
     void setupBettingPanel();
+
+    Deck m_deck;
 
     QWidget *m_panelContainer;
     BettingPanel *m_bettingPanel;

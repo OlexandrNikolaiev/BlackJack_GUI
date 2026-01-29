@@ -41,11 +41,17 @@ void BetStackWidget::addChipAnimated(int value, const QPoint &startGlobalPos)
     });
 
     anim->start(QAbstractAnimation::DeleteWhenStopped);
+    setCursor(Qt::PointingHandCursor);
 }
 
 void BetStackWidget::removeTopChipAnimated(const QPoint &endGlobalPos)
 {
-    if (m_chips.isEmpty()) return;
+    if (m_chips.isEmpty())
+        return;
+
+
+
+
 
     ChipData chip = m_chips.pop();
     m_totalAmount -= chip.value;
@@ -76,6 +82,9 @@ void BetStackWidget::removeTopChipAnimated(const QPoint &endGlobalPos)
 
     connect(anim, &QPropertyAnimation::finished, flyingChip, &QLabel::close);
     anim->start(QAbstractAnimation::DeleteWhenStopped);
+
+    if (m_chips.isEmpty())
+        setCursor(Qt::ArrowCursor);
 }
 
 int BetStackWidget::getTopChipValue() const
