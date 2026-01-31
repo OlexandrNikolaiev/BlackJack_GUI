@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QTimer>
+#include <QApplication>
 
 #include "../../Icons/icons.h"
 
@@ -14,8 +15,15 @@ BetStackWidget::BetStackWidget(QWidget *parent)
 
 void BetStackWidget::addChipAnimated(int value, const QPoint &startGlobalPos)
 {
-    QLabel* flyingChip = new QLabel(window());
+    m_totalAmount += value;
+    //To prevent the chip from jittering, first show the bet cost label, and then animate the flight.
+    emit betChanged(m_totalAmount);
 
+    double offsetX = QRandomGenerator::global()->bounded(-MAX_OFFSET, MAX_OFFSET);
+    double offsetY = QRandomGenerator::global()->bounded(-MAX_OFFSET, MAX_OFFSET);
+    double rotation = (QRandomGenerator::global()->generateDouble() * 10.0) - 5.0;
+
+    QLabel* flyingChip = new QLabel(window());
     const QPixmap& pix = getCachedPixmap(value);
 
     flyingChip->setPixmap(pix);
@@ -23,10 +31,11 @@ void BetStackWidget::addChipAnimated(int value, const QPoint &startGlobalPos)
     flyingChip->setAttribute(Qt::WA_DeleteOnClose);
     flyingChip->show();
 
-
     QPoint startPos = window()->mapFromGlobal(startGlobalPos) - QPoint(CHIP_SIZE/2, CHIP_SIZE/2);
 
-    QPoint endPosLocal = rect().center() - QPoint(CHIP_SIZE/2, CHIP_SIZE/2);
+    QPoint targetCenter = rect().center();
+    targetCenter += QPoint(static_cast<int>(offsetX), static_cast<int>(offsetY));
+    QPoint endPosLocal = targetCenter - QPoint(CHIP_SIZE/2, CHIP_SIZE/2);
     QPoint endPos = this->mapTo(window(), endPosLocal);
 
     QPropertyAnimation* anim = new QPropertyAnimation(flyingChip, "pos");
@@ -35,8 +44,8 @@ void BetStackWidget::addChipAnimated(int value, const QPoint &startGlobalPos)
     anim->setEndValue(endPos);
     anim->setEasingCurve(QEasingCurve::OutQuad);
 
-    connect(anim, &QPropertyAnimation::finished, this, [this, value, flyingChip](){
-        addChipInternal(value);
+    connect(anim, &QPropertyAnimation::finished, this, [this, value, flyingChip, offsetX, offsetY, rotation](){
+        addChipInternal(value, offsetX, offsetY, rotation);
         flyingChip->close();
     });
 
@@ -93,22 +102,17 @@ int BetStackWidget::getTopChipValue() const
     return m_chips.top().value;
 }
 
-void BetStackWidget::addChipInternal(int value)
+void BetStackWidget::addChipInternal(int value, double offsetX, double offsetY, double rotation)
 {
-    double offsetX = QRandomGenerator::global()->bounded(-MAX_OFFSET, MAX_OFFSET);
-    double offsetY = QRandomGenerator::global()->bounded(-MAX_OFFSET, MAX_OFFSET);
-    double rotation = (QRandomGenerator::global()->generateDouble() * 10.0) - 5.0;
-
     ChipData data;
     data.value = value;
     data.offset = QPointF(offsetX, offsetY);
     data.rotation = rotation;
 
     m_chips.push(data);
-    m_totalAmount += value;
 
-    emit betChanged(m_totalAmount);
-    update(); //paintEvent
+
+    update();
 }
 
 void BetStackWidget::clearStack()
@@ -122,6 +126,15 @@ void BetStackWidget::clearStack()
 int BetStackWidget::getTotalAmount() const
 {
     return m_totalAmount;
+}
+
+void BetStackWidget::restoreState(const QStack<ChipData> &data, int totalAmount)
+{
+    m_chips = data;
+    m_totalAmount = totalAmount;
+
+    update();
+    emit betChanged(m_totalAmount);
 }
 
 void BetStackWidget::paintEvent(QPaintEvent *event)

@@ -197,7 +197,7 @@ QPushButton:hover
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border-image: url(:/images/res/images/chips/chips_100_stack.png);</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>
@@ -299,24 +299,33 @@ QPushButton:hover
                </property>
                <property name="styleSheet">
                 <string notr="true">QToolButton {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #34d043, stop:1 #189e21);
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+        stop:0 #1e90ff, 
+        stop:0.5 #4169e1, 
+        stop:1 #104e8b);
     
-    border: 1px solid #127a19; 
-    border-radius: 6px;         
-    color: white; 
-    padding: 4px;
+    border: 1px solid #0f5a9a;
+    border-radius: 8px;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
 
-    padding-left: 10px; 
-    text-align: left; 
 }
 
 QToolButton:hover {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #2eb83c, stop:1 #158a1c);
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+        stop:0 #4ea8ff, 
+        stop:0.5 #5a9fff, 
+        stop:1 #1a75d2);
 }
 
 QToolButton:pressed {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #189e21, stop:1 #13791a);
-}</string>
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+        stop:0 #1a69c1, 
+        stop:0.5 #2a7fd5, 
+        stop:1 #0f4e8b);
+}
+</string>
                </property>
                <property name="text">
                 <string>Deal</string>

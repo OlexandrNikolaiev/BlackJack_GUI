@@ -3,6 +3,7 @@
 
 #include "../../Styles/styles.h"
 #include "../../Icons/icons.h"
+#include "../../../Infrastructure/Service/balancemanager.h"
 
 
 BettingPanel::BettingPanel(QWidget *parent)
@@ -10,20 +11,81 @@ BettingPanel::BettingPanel(QWidget *parent)
     , ui(new Ui::BettingPanel)
 {
     ui->setupUi(this);
-    if (ui->chips_10_stack) ui->chips_10_stack->init(10, Icon::BettingPanel::chips_10_stack);
-    if (ui->chips_25_stack) ui->chips_25_stack->init(25, Icon::BettingPanel::chips_25_stack);
-    if (ui->chips_50_stack) ui->chips_50_stack->init(50, Icon::BettingPanel::chips_50_stack);
-    if (ui->chips_100_stack) ui->chips_100_stack->init(100, Icon::BettingPanel::chips_100_stack);
-    if (ui->chips_500_stack) ui->chips_500_stack->init(500, Icon::BettingPanel::chips_500_stack);
-    if (ui->chips_1000_stack) ui->chips_1000_stack->init(1000, Icon::BettingPanel::chips_1000_stack);
+
+    auto setupChip = [&](ClickableChipStack* btn, int val, const QString& icon) {
+        if (!btn) return;
+        btn->init(val, icon);
+        m_chipButtons.insert(val, btn);
+    };
+
+    setupChip(ui->chips_10_stack, 10, Icon::BettingPanel::chips_10_stack);
+    setupChip(ui->chips_25_stack, 25, Icon::BettingPanel::chips_25_stack);
+    setupChip(ui->chips_50_stack, 50, Icon::BettingPanel::chips_50_stack);
+    setupChip(ui->chips_100_stack, 100, Icon::BettingPanel::chips_100_stack);
+    setupChip(ui->chips_500_stack, 500, Icon::BettingPanel::chips_500_stack);
+    setupChip(ui->chips_1000_stack, 1000, Icon::BettingPanel::chips_1000_stack);
 
     setAttribute(Qt::WA_StyledBackground, true);
     applyShadowEffect();
+
+    connect(ui->allInButton, &QPushButton::clicked, this, &BettingPanel::allInRequested);
+
+    connect(&BalanceManager::instance(), &BalanceManager::balanceChanged,
+            this, [this](int bal){
+                ui->bankBalanceLabel->setText(QString("$%1").arg(bal));
+            });
+
+    ui->bankBalanceLabel->setText(QString("$%1").arg(BalanceManager::instance().getBalance()));
+
+    qDebug()<<this->size();
+
+    //Styles::Effects::applyShadowBetting(this);
 }
 
 BettingPanel::~BettingPanel()
 {
     delete ui;
+}
+
+void BettingPanel::updateChipsAvailability(int currentAvailableFunds)
+{
+    for (auto it = m_chipButtons.begin(); it != m_chipButtons.end(); ++it) {
+        int chipValue = it.key();
+        ClickableChipStack* chipBtn = it.value();
+
+        bool canAfford = (chipValue <= currentAvailableFunds);
+
+        chipBtn->setEnabled(canAfford);
+
+        QGraphicsOpacityEffect *eff = qobject_cast<QGraphicsOpacityEffect*>(chipBtn->graphicsEffect());
+        if (!eff) {
+            eff = new QGraphicsOpacityEffect(chipBtn);
+            chipBtn->setGraphicsEffect(eff);
+        }
+        eff->setOpacity(canAfford ? 1.0 : 0.4);
+    }
+}
+
+void BettingPanel::setDisplayedBalance(int amount)
+{
+    ui->bankBalanceLabel->setText(QString("$%1").arg(amount));
+}
+
+void BettingPanel::setAllInEnabled(bool enabled)
+{
+    ui->allInButton->setEnabled(enabled);
+
+    QGraphicsOpacityEffect *eff = qobject_cast<QGraphicsOpacityEffect*>(ui->allInButton->graphicsEffect());
+    if (!eff) {
+        eff = new QGraphicsOpacityEffect(ui->allInButton);
+        ui->allInButton->setGraphicsEffect(eff);
+    }
+    eff->setOpacity(enabled ? 1.0 : 0.5);
+}
+
+void BettingPanel::onBalanceChanged(int newBalance)
+{
+    ui->bankBalanceLabel->setText(QString("$%1").arg(newBalance));
 }
 
 void BettingPanel::applyShadowEffect()

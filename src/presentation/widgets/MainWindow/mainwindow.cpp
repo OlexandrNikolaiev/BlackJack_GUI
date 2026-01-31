@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "../../Styles/styles.h"
 #include "../ClickableChipStack/clickablechipstack.h"
+#include "../../../Infrastructure/Service/balancemanager.h"
 
 #include <QTimer>
 #include <windows.h>
@@ -19,15 +20,32 @@ MainWindow::MainWindow(QWidget *parent)
     setAttribute(Qt::WA_TranslucentBackground);
     mBorderSize = 20;
 
-    ConnectSignals();
-    applyShadowEffect();
-
     setupBettingPanel();
 
+    ConnectSignals();
+
+    ui->dealerScoreLabel->hide();
+    ui->label_Dealer->hide();
+    ui->playerScoreLabel->hide();
+    ui->label_Player->hide();
+
+    applyShadowEffect();
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::ConnectSignals()
+{
+    QObject::connect(ui->closeButton, &QPushButton::clicked, this, &MainWindow::CloseWindow);
+    QObject::connect(ui->collapseButton, &QPushButton::clicked, this, &MainWindow::CollapseWindow);
     connect(ui->settingsButton, &QPushButton::clicked, this, &MainWindow::toggleBettingPanel);
 
-    connect(ui->betStackWidget, &BetStackWidget::betChanged, this, &MainWindow::updateBetLabel);
-    connect(ui->betStackWidget, &BetStackWidget::chipRemovalRequested, this, &MainWindow::onStackClicked);
+    connect(ui->betStackWidget_betting, &BetStackWidget::betChanged, this, &MainWindow::updateBetLabel);
+    connect(ui->betStackWidget_betting, &BetStackWidget::chipRemovalRequested, this, &MainWindow::onStackClicked);
 
     connect(ui->givePlayerButton, &QPushButton::clicked, this, &MainWindow::onDebugDealPlayer);
     connect(ui->giveDealerButton, &QPushButton::clicked, this, &MainWindow::onDebugDealDealer);
@@ -49,17 +67,29 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->flipButton, &QPushButton::clicked, this, [this](){
         ui->dealerHandWidget->flipCard(0);
     });
-}
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+    connect(ui->dealButton, &QPushButton::clicked, this, &MainWindow::onDealClicked);
 
-void MainWindow::ConnectSignals()
-{
-    QObject::connect(ui->closeButton, &QPushButton::clicked, this, &MainWindow::CloseWindow);
-    QObject::connect(ui->collapseButton, &QPushButton::clicked, this, &MainWindow::CollapseWindow);
+    connect(ui->betStackWidget_betting, &BetStackWidget::betChanged, this, [this](int amount){
+        if (amount < 1) {
+            ui->dealButton->hide();
+        }
+        else {
+            ui->dealButton->show();
+        }
+        updateBetLabel(amount);
+        checkChipsAvailability(amount);
+    });
+
+    connect(ui->playButton, &QPushButton::clicked, this, [this](){
+        showBettingPanel();
+        ui->betAmountLabel_betting->clear();
+        ui->dealButton->hide();
+
+        ui->stackedWidget->slideInWgt(ui->betting);
+    });
+
+    connect(m_bettingPanel, &BettingPanel::allInRequested, this, &MainWindow::onAllInClicked);
 }
 
 void MainWindow::CloseWindow()
@@ -93,6 +123,12 @@ void MainWindow::setupBettingPanel()
         "chips_1000_stack"
     };
 
+    connect(ui->betStackWidget_betting, &BetStackWidget::betChanged, this, [this](int amount){
+        updateBetLabel(amount);
+        checkChipsAvailability(amount);
+    });
+
+
     for (const QString &name : chipNames) {
         auto *chipBtn = m_bettingPanel->findChild<ClickableChipStack*>(name);
         if (chipBtn) {
@@ -109,11 +145,14 @@ void MainWindow::setupBettingPanel()
     m_panelContainer->hide();
     m_bettingPanel->hide();
 
-    connect(m_panelAnimation, &QPropertyAnimation::finished, this, [this](){
-        if (!m_isPanelVisible) {
-            m_panelContainer->hide();
-        }
-    });
+    // connect(m_panelAnimation, &QPropertyAnimation::finished, this, [this](){
+    //     if (!m_isPanelVisible) {
+    //         m_panelContainer->hide();
+    //     }
+    // });
+
+    //Styles::Effects::applyShadowBetting(m_panelContainer);
+
 }
 
 
@@ -166,11 +205,18 @@ void MainWindow::applyShadowEffect()
 {
     Styles::Effects::applyShadow(ui->MainFrame);
     Styles::Effects::applyShadow(ui->standButton);
-    Styles::Effects::applyShadow(ui->betStackWidget);
+    Styles::Effects::applyShadow(ui->betStackWidget_betting);
+    Styles::Effects::applyShadow(ui->betStackWidget_game);
     Styles::Effects::applyShadow(ui->settingsButton);
     Styles::Effects::applyShadow(ui->hitButton);
     Styles::Effects::applyShadow(ui->collapseButton);
     Styles::Effects::applyShadow(ui->closeButton);
+    //Styles::Effects::applyShadow(m_bettingPanel);
+    Styles::Effects::applyShadow(ui->playButton);
+    Styles::Effects::applyShadow(ui->dealButton);
+
+
+
 }
 
 
@@ -211,7 +257,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         if (m_isPanelVisible) {
             m_bettingPanel->setGeometry(0, 0, panelWidth, panelHeight);
         } else {
-            m_bettingPanel->setGeometry(0, containerH, panelWidth, panelHeight);
+            m_bettingPanel->setGeometry(0, containerH-60, panelWidth, panelHeight);
         }
     }
 }
@@ -223,7 +269,7 @@ void MainWindow::showBettingPanel()
     int panelWidth = 701;
     int panelHeight = 395;
 
-    QRect startRect(0, panelHeight, panelWidth, panelHeight);
+    QRect startRect(0, panelHeight-60, panelWidth, panelHeight);
     QRect endRect(0, 0, panelWidth, panelHeight);
 
     m_panelContainer->show();
@@ -233,6 +279,12 @@ void MainWindow::showBettingPanel()
     m_panelAnimation->setStartValue(startRect);
     m_panelAnimation->setEndValue(endRect);
     m_panelAnimation->start();
+
+    m_panelContainer->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+
+    ui->betStackWidget_betting->clearStack();
+
+    checkChipsAvailability(0);
 
     m_isPanelVisible = true;
 }
@@ -245,7 +297,9 @@ void MainWindow::hideBettingPanel()
     int panelHeight = m_bettingPanel->height();
 
     QRect startRect(0, 0, panelWidth, panelHeight);
-    QRect endRect(0, panelHeight, panelWidth, panelHeight);
+    QRect endRect(0, panelHeight-60, panelWidth, panelHeight);
+
+    m_panelContainer->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 
     m_panelAnimation->setStartValue(startRect);
     m_panelAnimation->setEndValue(endRect);
@@ -271,56 +325,146 @@ void MainWindow::onChipClicked(int value)
 {
     QPoint startPos = QCursor::pos();
 
-    ui->betStackWidget->addChipAnimated(value, startPos);
+    ui->betStackWidget_betting->addChipAnimated(value, startPos);
 }
 
 void MainWindow::updateBetLabel(int amount)
 {
-    ui->betAmountLabel->setText("$" + QString::number(amount));
+    if (amount < 1)
+    {
+        ui->betAmountLabel_betting->hide();
+    }
+    else
+    {
+        ui->betAmountLabel_betting->show();
+    }
+    QString text = "$" + QString::number(amount);
+
+    if (ui->betAmountLabel_betting)
+        ui->betAmountLabel_betting->setText(text);
+
+    if (ui->betAmountLabel_game)
+        ui->betAmountLabel_game->setText(text);
 }
 
 void MainWindow::onStackClicked()
 {
-    int value = ui->betStackWidget->getTopChipValue();
+    int value = ui->betStackWidget_betting->getTopChipValue();
     if (value == 0) return;
 
     QString buttonName = QString("chips_%1_stack").arg(value);
-
     QWidget* targetBtn = m_bettingPanel->findChild<QWidget*>(buttonName);
 
     QPoint targetGlobalPos;
 
-    if (targetBtn && targetBtn->isVisible()) {
+    if (targetBtn) {
         targetGlobalPos = targetBtn->mapToGlobal(targetBtn->rect().center());
     } else {
         targetGlobalPos = ui->settingsButton->mapToGlobal(ui->settingsButton->rect().center());
     }
 
-    ui->betStackWidget->removeTopChipAnimated(targetGlobalPos);
+    ui->betStackWidget_betting->removeTopChipAnimated(targetGlobalPos);
 }
 
 void MainWindow::onDebugDealPlayer()
 {
+    if (ui->playerHandWidget->getCardCount() == 0) {
+        ui->playerScoreLabel->show();
+        ui->label_Player->show();
+    }
+
     CardInfo card = m_deck.draw();
-
-    QPoint localShoePos(width() / 2, -200);
-    QPoint globalShoePos = mapToGlobal(localShoePos);
-
+    QPoint globalShoePos = mapToGlobal(QPoint(width() / 2, -200));
     ui->playerHandWidget->addCardAnimated(card.first, card.second, globalShoePos, true);
-
-    qDebug() << "Cards left:" << m_deck.cardsLeft();
 }
 
 void MainWindow::onDebugDealDealer()
 {
-    CardInfo card = m_deck.draw();
+    if (ui->dealerHandWidget->getCardCount() == 0) {
+        ui->dealerScoreLabel->show();
+        ui->label_Dealer->show();
+    }
 
-    QPoint localShoePos(width() / 2, -200);
-    QPoint globalShoePos = mapToGlobal(localShoePos);
+    CardInfo card = m_deck.draw();
+    QPoint globalShoePos = mapToGlobal(QPoint(width() / 2, -200));
 
     bool isFirstCard = (ui->dealerHandWidget->getCardCount() == 0);
-    bool faceUp = !isFirstCard;
+    ui->dealerHandWidget->addCardAnimated(card.first, card.second, globalShoePos, !isFirstCard);
+}
 
-    ui->dealerHandWidget->addCardAnimated(card.first, card.second, globalShoePos, faceUp);
+void MainWindow::onDealClicked()
+{
+    int currentBet = ui->betStackWidget_betting->getTotalAmount();
+
+    if (currentBet <= 0) {
+        qDebug() << "Make a bet!";
+        return;
+    }
+
+    if (!BalanceManager::instance().hasEnough(currentBet)) {
+        qDebug() << "Not enough balance!";
+        return;
+    }
+
+    BalanceManager::instance().decrease(currentBet);
+
+
+    auto chipsData = ui->betStackWidget_betting->getChipsData();
+    int totalAmount = ui->betStackWidget_betting->getTotalAmount();
+    ui->betStackWidget_game->restoreState(chipsData, totalAmount);
+
+    ui->stackedWidget->slideInWgt(ui->game);
+    //ui->stackedWidget->setCurrentWidget(ui->game);
+
+    // startNewRound(currentBet);
+
+    qDebug() << "Game started! Bet:" << currentBet << ". Balance updated.";
+
+    hideBettingPanel();
+}
+
+void MainWindow::checkChipsAvailability(int currentBetOnTable)
+{
+    int realBalance = BalanceManager::instance().getBalance();
+    int remainingFunds = realBalance - currentBetOnTable;
+
+    if (m_bettingPanel) {
+        m_bettingPanel->updateChipsAvailability(remainingFunds);
+        m_bettingPanel->setDisplayedBalance(remainingFunds);
+
+        m_bettingPanel->setAllInEnabled(remainingFunds > 0);
+    }
+}
+
+void MainWindow::onRoundFinished()
+{
+
+
+
+
+    ui->betStackWidget_game->clearStack();
+    ui->betStackWidget_betting->clearStack();
+}
+
+void MainWindow::onAllInClicked()
+{
+    int currentBet = ui->betStackWidget_betting->getTotalAmount();
+    int availableFunds = BalanceManager::instance().getBalance() - currentBet;
+
+    if (availableFunds <= 0) return;
+
+    QWidget* btn = m_bettingPanel->findChild<QWidget*>("allInButton");
+    QPoint startPos = btn ? btn->mapToGlobal(btn->rect().center()) : QCursor::pos();
+
+    QList<int> denominations = {1000, 500, 100, 50, 25, 10};
+    int tempAmount = availableFunds;
+
+    for (int value : denominations) {
+        while (tempAmount >= value) {
+            ui->betStackWidget_betting->addChipAnimated(value, startPos);
+            tempAmount -= value;
+        }
+    }
+
 }
 

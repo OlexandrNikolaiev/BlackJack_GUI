@@ -6,21 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>719</width>
-    <height>403</height>
+    <width>762</width>
+    <height>410</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>701</width>
-    <height>387</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>719</width>
-    <height>403</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -29,40 +17,13 @@
    <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
    <item row="0" column="0">
     <widget class="QFrame" name="frame">
-     <property name="minimumSize">
-      <size>
-       <width>701</width>
-       <height>385</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>701</width>
-       <height>385</height>
-      </size>
-     </property>
      <property name="styleSheet">
       <string notr="true">#frame
 {
 	border-image: url(:/images/res/images/bet_selector.png);
-}	
+}
 </string>
      </property>
      <property name="frameShape">
@@ -74,127 +35,8 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>10</y>
-        <width>231</width>
-        <height>38</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="bankLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="text">
-          <string>Bank:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="bankBalanceLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="text">
-          <string>$875</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QPushButton" name="allInButton">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>50</y>
-        <width>131</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-	background-color: rgb(0, 59, 167);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 24px;
-}
-
-QPushButton:hover {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                stop:0 #5aa0f2, stop:1 #468fcf);
-    transform: translateY(-2px);
-}
-
-QPushButton:pressed {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                stop:0 #357abd, stop:1 #2a6099);
-    transform: translateY(0px);
-}
-
-QPushButton:focus {
-    outline: none;
-}
-</string>
-      </property>
-      <property name="text">
-       <string>ALL IN</string>
-      </property>
-     </widget>
-     <widget class="ClickableChipStack" name="chips_1000_stack">
-      <property name="geometry">
-       <rect>
-        <x>27</x>
-        <y>250</y>
-        <width>120</width>
-        <height>120</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>120</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>120</width>
-        <height>120</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QWidget" name="layoutWidget_2">
-      <property name="geometry">
-       <rect>
         <x>20</x>
-        <y>110</y>
+        <y>120</y>
         <width>661</width>
         <height>122</height>
        </rect>
@@ -311,6 +153,125 @@ QPushButton:focus {
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="ClickableChipStack" name="chips_1000_stack">
+      <property name="geometry">
+       <rect>
+        <x>25</x>
+        <y>260</y>
+        <width>120</width>
+        <height>120</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>120</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>120</width>
+        <height>120</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>231</width>
+        <height>38</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="bankLabel">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>Bank:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="bankBalanceLabel">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>$875</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="allInButton">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>60</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-color: rgb(0, 59, 167);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #5aa0f2, stop:1 #468fcf);
+    transform: translateY(-2px);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #357abd, stop:1 #2a6099);
+    transform: translateY(0px);
+}
+
+QPushButton:focus {
+    outline: none;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>ALL IN</string>
+      </property>
      </widget>
     </widget>
    </item>

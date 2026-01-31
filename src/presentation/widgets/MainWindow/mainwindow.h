@@ -41,6 +41,13 @@ private slots:
     void onDebugDealPlayer();
     void onDebugDealDealer();
 
+    void onDealClicked();
+    void checkChipsAvailability(int currentBetOnTable);
+
+    void onRoundFinished();
+
+    void onAllInClicked();
+
 private:
     void ConnectSignals();
     void applyShadowEffect();

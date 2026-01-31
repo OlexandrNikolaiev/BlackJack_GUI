@@ -84,5 +84,6 @@
         <file>res/images/cards/52_pack_default/queen_of_diamonds.png</file>
         <file>res/images/cards/52_pack_default/queen_of_hearts.png</file>
         <file>res/images/cards/52_pack_default/queen_of_spades.png</file>
+        <file>res/images/welcom_image.png</file>
     </qresource>
 </RCC>

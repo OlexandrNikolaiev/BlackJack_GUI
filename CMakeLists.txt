@@ -22,6 +22,8 @@ set(PROJECT_SOURCES
 
         src/presentation/CustomWidgets/DraggableQFrame/draggableframe.cpp
         src/presentation/CustomWidgets/DraggableQFrame/draggableframe.h
+        src/presentation/CustomWidgets/SlidingStackedWidget/slidingstackedwidget.cpp
+        src/presentation/CustomWidgets/SlidingStackedWidget/slidingstackedwidget.h
         ${TS_FILES}
 )
 
@@ -49,6 +51,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Presentation/Widgets/Card/cardwidget.h src/Presentation/Widgets/Card/cardwidget.cpp
         src/Presentation/Widgets/Hand/handwidget.h src/Presentation/Widgets/Hand/handwidget.cpp
         src/Presentation/Widgets/MainWindow/temp3.ui
+        src/Infrastructure/Service/balancemanager.h src/Infrastructure/Service/balancemanager.cpp
+
     )
     qt_add_translations(BJGUI
             TS_FILES ${TS_FILES}

@@ -27,6 +27,9 @@ public:
     void clearStack();
     int getTotalAmount() const;
 
+    const QStack<ChipData>& getChipsData() const { return m_chips; }
+    void restoreState(const QStack<ChipData>& data, int totalAmount);
+
 signals:
     void betChanged(int newTotal);
     void chipRemovalRequested();
@@ -36,7 +39,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    void addChipInternal(int value);
+    void addChipInternal(int value, double offsetX, double offsetY, double rotation);
     QString getChipImagePath(int value);
     const QPixmap& getCachedPixmap(int value);
 
