@@ -85,5 +85,13 @@
         <file>res/images/cards/52_pack_default/queen_of_hearts.png</file>
         <file>res/images/cards/52_pack_default/queen_of_spades.png</file>
         <file>res/images/welcom_image.png</file>
+        <file>res/images/buttons/sound_muted.png</file>
+        <file>res/images/buttons/sound_not_muted.png</file>
+    </qresource>
+    <qresource prefix="/audio">
+        <file>res/audio/background_gtasa_music.mp3</file>
+        <file>res/audio/deal_card.wav</file>
+        <file>res/audio/chip.wav</file>
+        <file>res/audio/flip_card.wav</file>
     </qresource>
 </RCC>

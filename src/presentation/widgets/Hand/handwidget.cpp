@@ -4,6 +4,8 @@
 #include <QRandomGenerator>
 
 #include "../../Styles/styles.h"
+#include "../../../Infrastructure/Service/audiomanager.h"
+
 
 HandWidget::HandWidget(QWidget *parent) : QWidget(parent)
 {
@@ -114,6 +116,7 @@ void HandWidget::addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint 
     });
 
     group->start();
+    AudioManager::instance().playSound("deal_card", "qrc:/audio/res/audio/deal_card.wav");
     emit scoreChanged(calculateScore());
 }
 
@@ -122,6 +125,7 @@ void HandWidget::flipCard(int index)
     if (index >= 0 && index < m_cards.size()) {
         m_cards[index]->flipAnimated();
     }
+    AudioManager::instance().playSound("flip_card", "qrc:/audio/res/audio/flip_card.wav");
 }
 
 void HandWidget::updateCardPositions(bool animate)

@@ -4,6 +4,7 @@
 #include "../ClickableChipStack/clickablechipstack.h"
 #include "../../../Infrastructure/Service/balancemanager.h"
 #include "../Settings/settingswindow.h"
+#include "../../../Infrastructure/Service/audiomanager.h"
 
 #include <QTimer>
 #include <windows.h>
@@ -33,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     applyShadowEffect();
     setWindowTitle("Black Jack");
 
-
+    AudioManager::instance().playBackgroundMusic("qrc:/audio/res/audio/background_gtasa_music.mp3");
 }
 
 MainWindow::~MainWindow()

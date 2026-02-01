@@ -23,6 +23,14 @@ private slots:
 
     void on_setDefaultDeckSkinButton_clicked();
 
+
+
+    void on_musicSlider_valueChanged(int value);
+
+    void on_sfxSlider_valueChanged(int value);
+
+    void on_muteButton_toggled(bool checked);
+
 private:
     Ui::SettingsWindow *ui;
 };
