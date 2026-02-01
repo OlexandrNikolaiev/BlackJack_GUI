@@ -14,9 +14,12 @@ public:
     static SkinManager& instance();
 
     void setSkinPath(const QString& path);
+    QString getCurrentPath() const { return m_currentPath; }
 
     const QPixmap& getCardPixmap(Card::Suit suit, Card::Rank rank);
     const QPixmap& getBackPixmap();
+
+    QString getDefaultPath() const {return m_defaultPath;}
 
 signals:
     void skinChanged();
@@ -32,6 +35,8 @@ private:
     QString m_defaultPath;
 
     QMap<QString, QPixmap> m_cache;
+
+    const QString KEY_SKIN_PATH = "skins/path";
 };
 
 #endif // SKINMANAGER_H

@@ -2,7 +2,6 @@
 #define BALANCEMANAGER_H
 
 #include <QObject>
-#include <QSettings>
 
 class BalanceManager : public QObject
 {
@@ -21,12 +20,9 @@ signals:
 
 private:
     explicit BalanceManager(QObject *parent = nullptr);
-    void loadBalance();
-    void saveBalance();
 
     int m_balance;
-    const int DEFAULT_BALANCE = 1000;
-    const QString SETTING_KEY = "settings/balance";
+    const QString KEY_BALANCE = "game/balance";
 };
 
 #endif // BALANCEMANAGER_H

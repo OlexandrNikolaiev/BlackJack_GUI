@@ -1,4 +1,6 @@
 #include "balancemanager.h"
+#include "../Helpers/settingshelper.h"
+
 #include <QDebug>
 
 BalanceManager& BalanceManager::instance()
@@ -9,7 +11,7 @@ BalanceManager& BalanceManager::instance()
 
 BalanceManager::BalanceManager(QObject *parent) : QObject(parent)
 {
-    loadBalance();
+    m_balance = SettingsHelper::getValue(KEY_BALANCE, 1000).toInt();
 }
 
 int BalanceManager::getBalance() const
@@ -20,17 +22,23 @@ int BalanceManager::getBalance() const
 void BalanceManager::increase(int amount)
 {
     if (amount < 0) return;
+
     m_balance += amount;
-    saveBalance();
+
+    SettingsHelper::setValue(KEY_BALANCE, m_balance);
+
     emit balanceChanged(m_balance);
 }
 
 void BalanceManager::decrease(int amount)
 {
     if (amount < 0) return;
+
     if (m_balance >= amount) {
         m_balance -= amount;
-        saveBalance();
+
+        SettingsHelper::setValue(KEY_BALANCE, m_balance);
+
         emit balanceChanged(m_balance);
     } else {
         qDebug() << "Not enough funds!";
@@ -44,24 +52,10 @@ bool BalanceManager::hasEnough(int amount) const
 
 void BalanceManager::resetToDefault()
 {
-    m_balance = DEFAULT_BALANCE;
-    saveBalance();
+    m_balance = 1000;
+
+    SettingsHelper::setValue(KEY_BALANCE, m_balance);
+
     emit balanceChanged(m_balance);
 }
 
-void BalanceManager::loadBalance()
-{
-    QSettings settings("settings.ini", QSettings::IniFormat);
-    if (settings.contains(SETTING_KEY)) {
-        m_balance = settings.value(SETTING_KEY).toInt();
-    } else {
-        m_balance = DEFAULT_BALANCE;
-        settings.setValue(SETTING_KEY, m_balance);
-    }
-}
-
-void BalanceManager::saveBalance()
-{
-    QSettings settings("settings.ini", QSettings::IniFormat);
-    settings.setValue(SETTING_KEY, m_balance);
-}

@@ -3,6 +3,7 @@
 #include "../../Styles/styles.h"
 #include "../ClickableChipStack/clickablechipstack.h"
 #include "../../../Infrastructure/Service/balancemanager.h"
+#include "../Settings/settingswindow.h"
 
 #include <QTimer>
 #include <windows.h>
@@ -30,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_Player->hide();
 
     applyShadowEffect();
+    setWindowTitle("Black Jack");
+
 
 }
 
@@ -42,7 +45,7 @@ void MainWindow::ConnectSignals()
 {
     QObject::connect(ui->closeButton, &QPushButton::clicked, this, &MainWindow::CloseWindow);
     QObject::connect(ui->collapseButton, &QPushButton::clicked, this, &MainWindow::CollapseWindow);
-    connect(ui->settingsButton, &QPushButton::clicked, this, &MainWindow::toggleBettingPanel);
+    connect(ui->settingsButton, &QPushButton::clicked, this, &MainWindow::openSettings);
 
     connect(ui->betStackWidget_betting, &BetStackWidget::betChanged, this, &MainWindow::updateBetLabel);
     connect(ui->betStackWidget_betting, &BetStackWidget::chipRemovalRequested, this, &MainWindow::onStackClicked);
@@ -466,5 +469,14 @@ void MainWindow::onAllInClicked()
         }
     }
 
+}
+
+void MainWindow::openSettings()
+{
+    SettingsWindow settingsDialog(this);
+
+    settingsDialog.exec();
+
+    qDebug() << "Settings closed";
 }
 

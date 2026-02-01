@@ -6,7 +6,6 @@
 #include <QRandomGenerator>
 
 #include "../BettingPanel/bettingpanel.h"
-#include "../../../Core/carddata.h"
 #include "../../../Core/deck.h"
 
 
@@ -47,6 +46,8 @@ private slots:
     void onRoundFinished();
 
     void onAllInClicked();
+
+    void openSettings();
 
 private:
     void ConnectSignals();

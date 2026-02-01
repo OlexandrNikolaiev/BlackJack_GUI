@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QFileInfo>
 
+#include "../Helpers/settingshelper.h"
+
 SkinManager& SkinManager::instance() {
     static SkinManager _instance;
     return _instance;
@@ -10,20 +12,24 @@ SkinManager& SkinManager::instance() {
 SkinManager::SkinManager(QObject *parent) : QObject(parent)
 {
     m_defaultPath = ":/images/res/images/cards/52_pack_default";
-    m_currentPath = m_defaultPath;
+
+    QString savedPath = SettingsHelper::getValue(KEY_SKIN_PATH, m_defaultPath).toString();
+
+    if (savedPath != m_defaultPath && !QDir(savedPath).exists()) {
+        m_currentPath = m_defaultPath;
+    } else {
+        m_currentPath = savedPath;
+    }
 }
 
 void SkinManager::setSkinPath(const QString& path)
 {
     if (m_currentPath == path) return;
 
-    if (!path.startsWith(":") && !QDir(path).exists())
-    {
-        qDebug() << "Skin path does not exist:" << path;
-        return;
-    }
-
     m_currentPath = path;
+
+    SettingsHelper::setValue(KEY_SKIN_PATH, m_currentPath);
+
     m_cache.clear();
     emit skinChanged();
 }

@@ -52,6 +52,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Presentation/Widgets/Hand/handwidget.h src/Presentation/Widgets/Hand/handwidget.cpp
         src/Presentation/Widgets/MainWindow/temp3.ui
         src/Infrastructure/Service/balancemanager.h src/Infrastructure/Service/balancemanager.cpp
+        src/Presentation/Widgets/Settings/settingswindow.h src/Presentation/Widgets/Settings/settingswindow.cpp src/Presentation/Widgets/Settings/settingswindow.ui
+        src/Infrastructure/Helpers/settingshelper.h src/Infrastructure/Helpers/settingshelper.cpp
 
     )
     qt_add_translations(BJGUI
