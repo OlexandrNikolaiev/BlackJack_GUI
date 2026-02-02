@@ -1,6 +1,8 @@
 #ifndef CARDDATA_H
 #define CARDDATA_H
 
+#include <QPair>
+
 namespace Card
 {
     enum Suit { Hearts, Diamonds, Clubs, Spades };
@@ -17,5 +19,7 @@ namespace Card
         return static_cast<int>(rank);
     }
 }
+
+using CardInfo = QPair<Card::Suit, Card::Rank>;
 
 #endif // CARDDATA_H

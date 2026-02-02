@@ -33,14 +33,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         res.qrc
         src/presentation/widgets/BettingPanel/bettingpanel.h src/presentation/widgets/BettingPanel/bettingpanel.cpp src/presentation/widgets/BettingPanel/bettingpanel.ui
-        src/presentation/widgets/MainWindow/temp_delete_later.ui
         src/presentation/widgets/ClickableChipStack/clickablechipstack.h src/presentation/widgets/ClickableChipStack/clickablechipstack.cpp
         src/presentation/Styles/styles.h
         src/presentation/Icons/icons.h
-        src/Presentation/Widgets/MainWindow/temp2.ui
         src/Core/deck.h src/Core/deck.cpp
         src/Core/hand.h src/Core/hand.cpp
-        src/Core/gamerules.h src/Core/gamerules.cpp
+
         src/Infrastructure/StateMachine/IGameState.h
         src/Infrastructure/StateMachine/StateMachine.h
         src/Infrastructure/StateMachine/States/introstate.h src/Infrastructure/StateMachine/States/introstate.cpp
@@ -50,11 +48,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Core/carddata.h
         src/Presentation/Widgets/Card/cardwidget.h src/Presentation/Widgets/Card/cardwidget.cpp
         src/Presentation/Widgets/Hand/handwidget.h src/Presentation/Widgets/Hand/handwidget.cpp
-        src/Presentation/Widgets/MainWindow/temp3.ui
         src/Infrastructure/Service/balancemanager.h src/Infrastructure/Service/balancemanager.cpp
         src/Presentation/Widgets/Settings/settingswindow.h src/Presentation/Widgets/Settings/settingswindow.cpp src/Presentation/Widgets/Settings/settingswindow.ui
         src/Infrastructure/Helpers/settingshelper.h src/Infrastructure/Helpers/settingshelper.cpp
         src/Infrastructure/Service/audiomanager.h src/Infrastructure/Service/audiomanager.cpp
+        src/Core/gamesession.h src/Core/gamesession.cpp
+        src/Core/blackjackgame.h src/Core/blackjackgame.cpp
 
     )
     qt_add_translations(BJGUI

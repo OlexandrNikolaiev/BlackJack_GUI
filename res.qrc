@@ -93,5 +93,7 @@
         <file>res/audio/deal_card.wav</file>
         <file>res/audio/chip.wav</file>
         <file>res/audio/flip_card.wav</file>
+        <file>res/audio/victory.wav</file>
+        <file>res/audio/lose.wav</file>
     </qresource>
 </RCC>

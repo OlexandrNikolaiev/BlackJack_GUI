@@ -6,7 +6,9 @@
 #include <QRandomGenerator>
 
 #include "../BettingPanel/bettingpanel.h"
-#include "../../../Core/deck.h"
+//#include "../../../Core/deck.h"
+//#include "../../../Core/gamesession.h"
+#include "../../../Core/blackjackgame.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -32,39 +34,44 @@ private slots:
     void showBettingPanel();
     void hideBettingPanel();
     void toggleBettingPanel();
-
     void onChipClicked(int value);
     void updateBetLabel(int amount);
     void onStackClicked();
-
-    void onDebugDealPlayer();
-    void onDebugDealDealer();
+    void onAllInClicked();
+    void openSettings();
 
     void onDealClicked();
-    void checkChipsAvailability(int currentBetOnTable);
+    void onHitClicked();
+    void onStandClicked();
 
-    void onRoundFinished();
+    void onCardDealtToPlayer(Card::Suit suit, Card::Rank rank);
+    void onCardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp);
+    void onDealerTurnStarted();
+    void onRoundFinished(BlackjackGame::GameResult result, int payout);
+    void onGameError(const QString& message);
 
-    void onAllInClicked();
+    void resetGameAndShowBetting();
 
-    void openSettings();
+    //void onDebugDealPlayer();
+    //void onDebugDealDealer();
+
+
 
 private:
     void ConnectSignals();
     void applyShadowEffect();
-
     void CloseWindow();
     void CollapseWindow();
-
     void setupBettingPanel();
+    void checkChipsAvailability(int currentBetOnTable);
 
-    Deck m_deck;
-
+    //Deck m_deck;
+    //GameSession m_gameSession;
+    BlackjackGame* m_game;
     QWidget *m_panelContainer;
     BettingPanel *m_bettingPanel;
     QPropertyAnimation *m_panelAnimation;
     bool m_isPanelVisible;
-
     int mBorderSize;
     Ui::MainWindow *ui;
 };
