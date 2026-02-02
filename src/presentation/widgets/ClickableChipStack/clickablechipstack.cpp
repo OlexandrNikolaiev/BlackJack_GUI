@@ -1,5 +1,6 @@
 #include "clickablechipstack.h"
 #include <QGraphicsDropShadowEffect>
+#include <qpainter.h>
 
 #include "../../Styles/styles.h"
 
@@ -25,6 +26,16 @@ ClickableChipStack::~ClickableChipStack()
 
 }
 
+void ClickableChipStack::setAvailable(bool available)
+{
+    if (m_isAvailable == available) return;
+    m_isAvailable = available;
+
+    setCursor(m_isAvailable ? Qt::PointingHandCursor : Qt::ForbiddenCursor);
+
+    update();
+}
+
 void ClickableChipStack::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
@@ -44,4 +55,25 @@ void ClickableChipStack::enterEvent(QEnterEvent *event)
 void ClickableChipStack::leaveEvent(QEvent *event)
 {
     QLabel::leaveEvent(event);
+}
+
+void ClickableChipStack::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+
+    QPixmap p = pixmap();
+
+    if (p.isNull()) return;
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    if (!m_isAvailable) {
+        painter.setOpacity(0.4);
+    } else {
+        painter.setOpacity(1.0);
+    }
+
+    painter.drawPixmap(rect(), p);
 }

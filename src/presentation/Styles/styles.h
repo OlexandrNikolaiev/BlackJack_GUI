@@ -30,6 +30,24 @@ namespace Styles
             return shadow;
         }
 
+
+
+        inline QGraphicsDropShadowEffect* outcome(QObject* parent = nullptr)
+        {
+            auto *shadow = new QGraphicsDropShadowEffect(parent);
+            shadow->setBlurRadius(20);
+            shadow->setOffset(0, 5);
+            shadow->setColor(QColor(0, 0, 0, 150));
+            return shadow;
+        }
+
+        inline void applyShadowOutcome(QWidget* widget)
+        {
+            if (widget) {
+                widget->setGraphicsEffect(outcome(widget));
+            }
+        }
+
         inline void applyShadowBetting(QWidget* widget)
         {
             if (widget) {

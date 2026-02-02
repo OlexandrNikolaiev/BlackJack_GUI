@@ -6,9 +6,11 @@
 #include <QRandomGenerator>
 
 #include "../BettingPanel/bettingpanel.h"
-//#include "../../../Core/deck.h"
-//#include "../../../Core/gamesession.h"
+
 #include "../../../Core/blackjackgame.h"
+
+#include "../../Outcomes/outcome.h"
+#include "../../Dimmer/overlaywidget.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -65,13 +67,16 @@ private:
     void setupBettingPanel();
     void checkChipsAvailability(int currentBetOnTable);
 
-    //Deck m_deck;
-    //GameSession m_gameSession;
     BlackjackGame* m_game;
+
     QWidget *m_panelContainer;
     BettingPanel *m_bettingPanel;
     QPropertyAnimation *m_panelAnimation;
     bool m_isPanelVisible;
+
+    Outcome* m_outcomeWidget = nullptr;
+    OverlayWidget* m_overlay = nullptr;
+
     int mBorderSize;
     Ui::MainWindow *ui;
 };

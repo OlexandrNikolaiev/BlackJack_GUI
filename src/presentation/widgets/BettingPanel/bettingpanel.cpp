@@ -57,12 +57,7 @@ void BettingPanel::updateChipsAvailability(int currentAvailableFunds)
 
         chipBtn->setEnabled(canAfford);
 
-        QGraphicsOpacityEffect *eff = qobject_cast<QGraphicsOpacityEffect*>(chipBtn->graphicsEffect());
-        if (!eff) {
-            eff = new QGraphicsOpacityEffect(chipBtn);
-            chipBtn->setGraphicsEffect(eff);
-        }
-        eff->setOpacity(canAfford ? 1.0 : 0.4);
+        chipBtn->setAvailable(canAfford);
     }
 }
 

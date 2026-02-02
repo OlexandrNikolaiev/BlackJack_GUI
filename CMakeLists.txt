@@ -55,6 +55,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Core/gamesession.h src/Core/gamesession.cpp
         src/Core/blackjackgame.h src/Core/blackjackgame.cpp
 
+        src/Presentation/Outcomes/outcome.h src/Presentation/Outcomes/outcome.cpp src/Presentation/Outcomes/outcome.ui
+        src/Presentation/Dimmer/overlaywidget.h src/Presentation/Dimmer/overlaywidget.cpp
+
     )
     qt_add_translations(BJGUI
             TS_FILES ${TS_FILES}

@@ -95,5 +95,7 @@
         <file>res/audio/flip_card.wav</file>
         <file>res/audio/victory.wav</file>
         <file>res/audio/lose.wav</file>
+        <file>res/audio/push.wav</file>
+        <file>res/audio/jackpot.wav</file>
     </qresource>
 </RCC>

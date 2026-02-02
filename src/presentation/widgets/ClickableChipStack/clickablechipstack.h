@@ -18,6 +18,7 @@ public:
     void init(int value, const QString &imagePath);
 
     ~ClickableChipStack();
+    void setAvailable(bool available);
 
 signals:
     void clicked(int value);
@@ -26,9 +27,12 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void enterEvent(QEnterEvent *event) override;
     void leaveEvent(QEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
+
 
 private:
     int m_value;
+    bool m_isAvailable = true;
 };
 
 #endif // CLICKABLECHIPSTACK_H

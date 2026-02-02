@@ -256,6 +256,18 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
 
+    if (m_overlay) {
+        QPoint point = ui->MainFrame->mapTo(this, QPoint(0, 0));
+        m_overlay->setGeometry(point.x(), point.y(), ui->MainFrame->width(), ui->MainFrame->height());
+    }
+
+    if (m_outcomeWidget && m_outcomeWidget->isVisible()) {
+        QPoint tableCenter = ui->MainFrame->mapTo(this, ui->MainFrame->rect().center());
+        int x = tableCenter.x() - (m_outcomeWidget->width() / 2);
+        int y = tableCenter.y() - (m_outcomeWidget->height() / 2);
+        m_outcomeWidget->move(x, y);
+    }
+
     if (m_bettingPanel && m_panelContainer) {
         int panelWidth = 701;
         int panelHeight = 395;
@@ -469,51 +481,81 @@ void MainWindow::onRoundFinished(BlackjackGame::GameResult result, int payout)
     ui->hitButton->hide();
     ui->standButton->hide();
 
-    QString msg;
-    QString soundPath;
+    int time;
 
-    bool lose = false; // for sound check
-
-    switch(result) {
-    case BlackjackGame::PlayerWin:
-        msg = "YOU WON!";
-        soundPath = "qrc:/audio/res/audio/victory.wav";
-        break;
-    case BlackjackGame::PlayerBlackjack:
-        msg = "BLACKJACK!";
-        soundPath = "win";
-        break;
-    case BlackjackGame::DealerBust:
-        msg = "DEALER BUST! YOU WON!";
-        soundPath = "qrc:/audio/res/audio/victory.wav";
-        break;
-    case BlackjackGame::DealerWin:
-        msg = "DEALER WON";
-        soundPath = "qrc:/audio/res/audio/lose.wav";
-        lose = true;
-        break;
-    case BlackjackGame::PlayerBust:
-        msg = "BUSTED";
-        soundPath = "qrc:/audio/res/audio/lose.wav";
-        lose = true;
-        break;
-    case BlackjackGame::Push:
-        msg = "PUSH (TIE)";
-        soundPath = "chip";
-        break;
-    }
-
-    qDebug() << "Round Over:" << msg << "Payout:" << payout;
-
-    if (!soundPath.isEmpty()) {
-        AudioManager::instance().playSound(msg, soundPath);
-    }
-
-    if (lose) {
-        QTimer::singleShot(4500, this, &MainWindow::resetGameAndShowBetting);
+    if (result == BlackjackGame::GameResult::PlayerBust) {
+        time = 600; // 600 for card animation + 300 delay
     } else {
-        QTimer::singleShot(3000, this, &MainWindow::resetGameAndShowBetting);
+        time = 0;
     }
+
+    QTimer::singleShot(time, this, [this, result, payout](){
+        if (!m_overlay) {
+            m_overlay = new OverlayWidget(this);
+
+            QPoint point = ui->MainFrame->mapTo(this, QPoint(0, 0));
+            m_overlay->setGeometry(point.x(), point.y(), ui->MainFrame->width(), ui->MainFrame->height());
+
+            m_overlay->show();
+            m_overlay->raise();
+        }
+
+        if (!m_outcomeWidget) {
+            m_outcomeWidget = new Outcome(this);
+        }
+
+        m_outcomeWidget->setGameResult(result, payout);
+        m_outcomeWidget->adjustSize();
+
+        QPoint centerOfTable = ui->MainFrame->mapTo(this, ui->MainFrame->rect().center());
+
+        int x = centerOfTable.x() - (m_outcomeWidget->width() / 2);
+        int y = centerOfTable.y() - (m_outcomeWidget->height() / 2);
+        m_outcomeWidget->move(x, y);
+
+        m_outcomeWidget->show();
+        m_outcomeWidget->raise();
+
+        QString msg;
+        QString soundPath;
+        bool lose = false;
+
+        switch(result) {
+        case BlackjackGame::PlayerWin:
+            msg = "YOU WON!";
+            soundPath = "qrc:/audio/res/audio/victory.wav";
+            break;
+        case BlackjackGame::PlayerBlackjack:
+            msg = "BLACKJACK!";
+            soundPath = "qrc:/audio/res/audio/jackpot.wav";
+            break;
+        case BlackjackGame::DealerBust:
+            msg = "DEALER BUST!";
+            soundPath = "qrc:/audio/res/audio/victory.wav";
+            break;
+        case BlackjackGame::DealerWin:
+            msg = "DEALER WON";
+            soundPath = "qrc:/audio/res/audio/lose.wav";
+            lose = true;
+            break;
+        case BlackjackGame::PlayerBust:
+            msg = "BUSTED";
+            soundPath = "qrc:/audio/res/audio/lose.wav";
+            lose = true;
+            break;
+        case BlackjackGame::Push:
+            msg = "PUSH";
+            soundPath = "qrc:/audio/res/audio/push.wav";
+            break;
+        }
+
+        if (!soundPath.isEmpty()) {
+            AudioManager::instance().playSound(msg, soundPath);
+        }
+
+        int delay = lose ? 4500 : 3500;
+        QTimer::singleShot(delay, this, &MainWindow::resetGameAndShowBetting);
+    });
 }
 
 void MainWindow::onGameError(const QString &message)
@@ -523,6 +565,17 @@ void MainWindow::onGameError(const QString &message)
 
 void MainWindow::resetGameAndShowBetting()
 {
+    if (m_outcomeWidget) {
+        m_outcomeWidget->close();
+        m_outcomeWidget->deleteLater();
+        m_outcomeWidget = nullptr;
+    }
+
+    if (m_overlay) {
+        m_overlay->fadeOutAndClose();
+        m_overlay = nullptr;
+    }
+
     ui->playerHandWidget->clearHand();
     ui->dealerHandWidget->clearHand();
     ui->betStackWidget_game->clearStack();
