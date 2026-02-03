@@ -18,7 +18,6 @@ BetStackWidget::BetStackWidget(QWidget *parent)
 void BetStackWidget::addChipAnimated(int value, const QPoint &startGlobalPos)
 {
     m_totalAmount += value;
-    //To prevent the chip from jittering, first show the bet cost label, and then animate the flight.
     emit betChanged(m_totalAmount);
 
     double offsetX = QRandomGenerator::global()->bounded(-MAX_OFFSET, MAX_OFFSET);

@@ -155,7 +155,7 @@ void MainWindow::setupBettingPanel()
     }
 
     m_panelAnimation = new QPropertyAnimation(m_bettingPanel, "geometry", this);
-    m_panelAnimation->setDuration(500);
+    m_panelAnimation->setDuration(600);
     m_panelAnimation->setEasingCurve(QEasingCurve::OutCubic);
 
     m_panelContainer->hide();

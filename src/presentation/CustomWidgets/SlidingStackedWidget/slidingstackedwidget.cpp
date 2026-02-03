@@ -35,7 +35,7 @@ SlidingStackedWidget::SlidingStackedWidget(QWidget *parent)
         m_mainwindow=this;
     }
     m_vertical=false;
-    m_speed=900;
+    m_speed=600;
     m_animationtype = QEasingCurve::OutCubic;
     m_now=0;
     m_next=0;
