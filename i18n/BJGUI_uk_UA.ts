@@ -67,23 +67,23 @@
 ставку</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="40"/>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="257"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="42"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="263"/>
         <source>BlackJack</source>
         <translation>Блекджек</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="573"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="583"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="605"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="615"/>
         <source>Game Over</source>
         <translation>Кінець гри</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="605"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="615"/>
         <source>You ran out of money! Reset balance to 1000?</source>
         <translation>Гроші закінчилися! Поповнити баланс до 1000?</translation>
     </message>
@@ -101,27 +101,33 @@
         <translation>Гравець виграв!</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="35"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="36"/>
         <source>BLACKJACK!</source>
         <translation>БЛЕКДЖЕК!</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="35"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="38"/>
+        <source>DEALER BUST! YOU WON!</source>
+        <translation>ПЕРЕБІР!
+ВИ ВИГРАЛИ!</translation>
+    </message>
+    <message>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="40"/>
         <source>YOU WON!</source>
         <translation>ВИ ВИГРАЛИ!</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="43"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="51"/>
         <source>BUSTED</source>
         <translation>ПЕРЕБІР</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="43"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="46"/>
         <source>DEALER WINS</source>
         <translation>ДИЛЕР ВИГРАВ</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="48"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="56"/>
         <source>PUSH (TIE)</source>
         <translation>НІЧИЯ</translation>
     </message>

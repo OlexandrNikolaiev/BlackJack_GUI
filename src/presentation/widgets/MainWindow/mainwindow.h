@@ -46,8 +46,10 @@ private slots:
     void onHitClicked();
     void onStandClicked();
 
-    void onCardDealtToPlayer(Card::Suit suit, Card::Rank rank);
-    void onCardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp);
+    void onCardDealtToPlayer(Card::Suit suit, Card::Rank rank, int newScore);
+    void onCardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp, int newScore);
+    void onDealerCardRevealed(int index, int newScore);
+
     void onDealerTurnStarted();
     void onRoundFinished(BlackjackGame::GameResult result, int payout);
     void onGameError(const QString& message);

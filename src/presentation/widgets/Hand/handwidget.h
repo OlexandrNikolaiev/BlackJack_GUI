@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QList>
 #include "../Card/cardwidget.h"
-#include "../../../Core/hand.h"
 
 class HandWidget : public QWidget
 {
@@ -18,12 +17,11 @@ public:
 
     explicit HandWidget(QWidget *parent = nullptr);
 
-    void addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint& startGlobalPos, bool faceUp = true);
-    void flipCard(int index);
+    void addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint& startGlobalPos, bool faceUp = true, int totalScore = 0);
+    void flipCard(int index, int totalScore);
     void clearHand();
     void setAlignment(CardAlignment alignment);
 
-    int calculateScore() const;
     int getCardCount() const { return m_cards.size(); }
 
 protected:
@@ -36,7 +34,6 @@ private:
     void updateCardPositions(bool animate = true);
 
     QList<CardWidget*> m_cards;
-    Hand m_handLogic;
 
     const int CARD_SPACING = 35;
     CardAlignment m_alignment = AlignCenter;

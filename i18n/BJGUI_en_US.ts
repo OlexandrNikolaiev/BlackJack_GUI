@@ -66,23 +66,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="40"/>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="257"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="42"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="263"/>
         <source>BlackJack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="573"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="583"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="605"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="615"/>
         <source>Game Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="605"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="615"/>
         <source>You ran out of money! Reset balance to 1000?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -100,27 +100,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="35"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="36"/>
         <source>BLACKJACK!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="35"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="38"/>
+        <source>DEALER BUST! YOU WON!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="40"/>
         <source>YOU WON!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="43"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="51"/>
         <source>BUSTED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="43"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="46"/>
         <source>DEALER WINS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="48"/>
+        <location filename="../src/Presentation/Outcomes/outcome.cpp" line="56"/>
         <source>PUSH (TIE)</source>
         <translation type="unfinished"></translation>
     </message>

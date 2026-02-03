@@ -61,6 +61,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Presentation/Outcomes/outcome.h src/Presentation/Outcomes/outcome.cpp src/Presentation/Outcomes/outcome.ui
         src/Presentation/Dimmer/overlaywidget.h src/Presentation/Dimmer/overlaywidget.cpp
         src/Infrastructure/Helpers/languagehelper.h
+        src/Core/chipcalculator.h src/Core/chipcalculator.cpp
 
     )
     qt_add_translations(BJGUI

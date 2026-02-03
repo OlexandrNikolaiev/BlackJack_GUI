@@ -17,7 +17,6 @@ void HandWidget::clearHand()
 {
     qDeleteAll(m_cards);
     m_cards.clear();
-    m_handLogic.clear();
     emit scoreChanged(0);
 }
 
@@ -27,15 +26,8 @@ void HandWidget::setAlignment(CardAlignment alignment)
     updateCardPositions(false);
 }
 
-int HandWidget::calculateScore() const
+void HandWidget::addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint &startGlobalPos, bool faceUp, int totalScore)
 {
-    return m_handLogic.getVisibleScore();
-}
-
-void HandWidget::addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint &startGlobalPos, bool faceUp)
-{
-    m_handLogic.addCard(suit, rank, faceUp);
-
     const int ANIM_DURATION = 600;
 
     // real card that lives in hand
@@ -44,9 +36,9 @@ void HandWidget::addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint 
     // will be shown after animation
     realCard->hide();
 
-    connect(realCard, &CardWidget::flipped, this, [this](){
-        emit scoreChanged(calculateScore());
-    });
+    // connect(realCard, &CardWidget::flipped, this, [this](){
+    //     // todo
+    // });
 
     m_cards.append(realCard);
     // realCard will get its coordinates (targetPos), and the old cards will be shifted to the left
@@ -101,21 +93,20 @@ void HandWidget::addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint 
 
     group->start();
     AudioManager::instance().playSound("deal_card", "qrc:/audio/res/audio/deal_card.wav");
-    QTimer::singleShot(ANIM_DURATION / 2, this, [this](){
-        emit scoreChanged(calculateScore());
+    QTimer::singleShot(ANIM_DURATION / 2, this, [this, totalScore](){
+        emit scoreChanged(totalScore);
     });
 
 }
 
-void HandWidget::flipCard(int index)
+void HandWidget::flipCard(int index, int totalScore)
 {
     if (index >= 0 && index < m_cards.size()) {
         m_cards[index]->flipAnimated();
     }
-    m_handLogic.setCardFaceUp(index, true);
     AudioManager::instance().playSound("flip_card", "qrc:/audio/res/audio/flip_card.wav");
     //emit scoreChanged(calculateScore());
-
+    emit scoreChanged(totalScore);
 }
 
 void HandWidget::updateCardPositions(bool animate)

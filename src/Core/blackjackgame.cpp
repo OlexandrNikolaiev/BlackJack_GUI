@@ -37,28 +37,28 @@ void BlackjackGame::startRound(int betAmount)
 
     CardInfo c1 = m_deck.draw();
     m_playerHand.addCard(c1.first, c1.second, true);
-    emit cardDealtToPlayer(c1.first, c1.second);
+    emit cardDealtToPlayer(c1.first, c1.second, m_playerHand.getTotalScore());
 
     QTimer::singleShot(600, &loop, &QEventLoop::quit);
     loop.exec();
 
     CardInfo c2 = m_deck.draw();
     m_dealerHand.addCard(c2.first, c2.second, false);
-    emit cardDealtToDealer(c2.first, c2.second, false);
+    emit cardDealtToDealer(c2.first, c2.second, false, m_dealerHand.getVisibleScore());
 
     QTimer::singleShot(600, &loop, &QEventLoop::quit);
     loop.exec();
 
     CardInfo c3 = m_deck.draw();
     m_playerHand.addCard(c3.first, c3.second, true);
-    emit cardDealtToPlayer(c3.first, c3.second);
+    emit cardDealtToPlayer(c3.first, c3.second, m_playerHand.getTotalScore());
 
     QTimer::singleShot(600, &loop, &QEventLoop::quit);
     loop.exec();
 
     CardInfo c4 = m_deck.draw();
     m_dealerHand.addCard(c4.first, c4.second, true);
-    emit cardDealtToDealer(c4.first, c4.second, true);
+    emit cardDealtToDealer(c4.first, c4.second, true, m_dealerHand.getVisibleScore());
 
     QTimer::singleShot(600, &loop, &QEventLoop::quit);
     loop.exec();
@@ -77,7 +77,7 @@ void BlackjackGame::playerHit()
 {
     CardInfo c = m_deck.draw();
     m_playerHand.addCard(c.first, c.second, true);
-    emit cardDealtToPlayer(c.first, c.second);
+    emit cardDealtToPlayer(c.first, c.second, m_playerHand.getTotalScore());
 
     if (m_playerHand.isBusted()) {
         emit roundFinished(PlayerBust, 0);
@@ -103,7 +103,7 @@ void BlackjackGame::runDealerTurn()
     m_dealerHand.setCardFaceUp(hiddenCardIndex, true);
     qDebug()<<"dealer turn, score = "<<m_dealerHand.getTotalScore();
 
-    emit dealerCardRevealed(hiddenCardIndex);
+    emit dealerCardRevealed(hiddenCardIndex, m_dealerHand.getTotalScore());
 
     QTimer::singleShot(800, &loop, &QEventLoop::quit); // temporary
     loop.exec();
@@ -111,7 +111,7 @@ void BlackjackGame::runDealerTurn()
     while (m_dealerHand.getVisibleScore() < 17) {
         CardInfo c = m_deck.draw();
         m_dealerHand.addCard(c.first, c.second, true);
-        emit cardDealtToDealer(c.first, c.second, true);
+        emit cardDealtToDealer(c.first, c.second, true, m_dealerHand.getTotalScore());
 
         QTimer::singleShot(1000, &loop, &QEventLoop::quit);
         loop.exec();

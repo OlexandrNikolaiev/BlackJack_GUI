@@ -6,6 +6,7 @@
 #include "../Settings/settingswindow.h"
 #include "../../../Infrastructure/Service/audiomanager.h"
 #include "../../../Infrastructure/Helpers/settingshelper.h"
+#include "../../../Core/chipcalculator.h"
 
 
 #include <QTimer>
@@ -96,7 +97,10 @@ void MainWindow::ConnectSignals()
     // CONTROLLER
     connect(m_game, &BlackjackGame::cardDealtToPlayer, this, &MainWindow::onCardDealtToPlayer);
     connect(m_game, &BlackjackGame::cardDealtToDealer, this, &MainWindow::onCardDealtToDealer);
+
     connect(m_game, &BlackjackGame::dealerTurnStarted, this, &MainWindow::onDealerTurnStarted);
+    connect(m_game, &BlackjackGame::dealerCardRevealed, this, &MainWindow::onDealerCardRevealed);
+
     connect(m_game, &BlackjackGame::roundFinished, this, &MainWindow::onRoundFinished);
     connect(m_game, &BlackjackGame::gameError, this, &MainWindow::onGameError);
 
@@ -458,34 +462,36 @@ void MainWindow::onHitClicked()
 
 void MainWindow::onStandClicked()
 {
-    ui->hitButton->setEnabled(false);
-    ui->standButton->setEnabled(false);
     m_game->playerStand();
 }
 
-void MainWindow::onCardDealtToPlayer(Card::Suit suit, Card::Rank rank)
+void MainWindow::onDealerCardRevealed(int index, int newScore)
+{
+    ui->dealerHandWidget->flipCard(index, newScore);
+}
+
+void MainWindow::onCardDealtToPlayer(Card::Suit suit, Card::Rank rank, int newScore)
 {
     ui->playerScoreLabel->show();
     ui->label_Player->show();
 
     QPoint globalShoePos = mapToGlobal(QPoint(width() / 2, -200));
-    ui->playerHandWidget->addCardAnimated(suit, rank, globalShoePos, true);
+    ui->playerHandWidget->addCardAnimated(suit, rank, globalShoePos, true, newScore);
 }
 
-void MainWindow::onCardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp)
+void MainWindow::onCardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp, int newScore)
 {
     ui->dealerScoreLabel->show();
     ui->label_Dealer->show();
 
     QPoint globalShoePos = mapToGlobal(QPoint(width() / 2, -200));
-    ui->dealerHandWidget->addCardAnimated(suit, rank, globalShoePos, isFaceUp);
+    ui->dealerHandWidget->addCardAnimated(suit, rank, globalShoePos, isFaceUp, newScore);
 }
 
 void MainWindow::onDealerTurnStarted()
 {
-    if (ui->dealerHandWidget->getCardCount() >= 2) {
-        ui->dealerHandWidget->flipCard(0);
-    }
+    ui->hitButton->hide();
+    ui->standButton->hide();
 }
 
 void MainWindow::onRoundFinished(BlackjackGame::GameResult result, int payout)
@@ -496,7 +502,7 @@ void MainWindow::onRoundFinished(BlackjackGame::GameResult result, int payout)
     int time;
 
     if (result == BlackjackGame::GameResult::PlayerBust) {
-        time = 600; // 600 for card animation + 300 delay
+        time = 900; // 600 for card animation + 300 delay
     } else {
         time = 0;
     }
@@ -528,44 +534,44 @@ void MainWindow::onRoundFinished(BlackjackGame::GameResult result, int payout)
         m_outcomeWidget->show();
         m_outcomeWidget->raise();
 
-        QString msg;
+        QString msgKeyMassage;
         QString soundPath;
         bool lose = false;
 
         switch(result) {
         case BlackjackGame::PlayerWin:
-            msg = "YOU WON!";
+            msgKeyMassage = "YOU WON!";
             soundPath = "qrc:/audio/res/audio/victory.wav";
             break;
         case BlackjackGame::PlayerBlackjack:
-            msg = "BLACKJACK!";
+            msgKeyMassage = "BLACKJACK!";
             soundPath = "qrc:/audio/res/audio/jackpot.wav";
             break;
         case BlackjackGame::DealerBust:
-            msg = "DEALER BUST!";
+            msgKeyMassage = "DEALER BUST!";
             soundPath = "qrc:/audio/res/audio/victory.wav";
             break;
         case BlackjackGame::DealerWin:
-            msg = "DEALER WON";
+            msgKeyMassage = "DEALER WON";
             soundPath = "qrc:/audio/res/audio/lose.wav";
             lose = true;
             break;
         case BlackjackGame::PlayerBust:
-            msg = "BUSTED";
+            msgKeyMassage = "BUSTED";
             soundPath = "qrc:/audio/res/audio/lose.wav";
             lose = true;
             break;
         case BlackjackGame::Push:
-            msg = "PUSH";
+            msgKeyMassage = "PUSH";
             soundPath = "qrc:/audio/res/audio/push.wav";
             break;
         }
 
         if (!soundPath.isEmpty()) {
-            AudioManager::instance().playSound(msg, soundPath);
+            AudioManager::instance().playSound(msgKeyMassage, soundPath);
         }
 
-        int delay = lose ? 4500 : 3500;
+        int delay = lose ? 4500 : 3500; // delay for lose sound is 4500
         QTimer::singleShot(delay, this, &MainWindow::resetGameAndShowBetting);
     });
 }
@@ -664,16 +670,11 @@ void MainWindow::onAllInClicked()
     QWidget* btn = m_bettingPanel->findChild<QWidget*>("allInButton");
     QPoint startPos = btn ? btn->mapToGlobal(btn->rect().center()) : QCursor::pos();
 
-    QList<int> denominations = {1000, 500, 100, 50, 25, 10};
-    int tempAmount = availableFunds;
+    QList<int> chipsToAdd = ChipCalculator::getChipsForAmount(availableFunds);
 
-    for (int value : denominations) {
-        while (tempAmount >= value) {
-            ui->betStackWidget_betting->addChipAnimated(value, startPos);
-            tempAmount -= value;
-        }
+    for (int chipValue : chipsToAdd) {
+        ui->betStackWidget_betting->addChipAnimated(chipValue, startPos);
     }
-
 }
 
 void MainWindow::openSettings()

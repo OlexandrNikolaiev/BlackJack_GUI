@@ -32,15 +32,15 @@ public:
 signals:
 
     // for animations
-    void cardDealtToPlayer(Card::Suit suit, Card::Rank rank);
-    void cardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp);
+    void cardDealtToPlayer(Card::Suit suit, Card::Rank rank, int newScore);
+    void cardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp, int newScore);
     void dealerTurnStarted();
 
     void roundFinished(GameResult result, int payoutAmount);
 
     void gameError(const QString& message);
 
-    void dealerCardRevealed(int index);
+    void dealerCardRevealed(int index, int newScore);
 
     void initialDealFinished();
 
