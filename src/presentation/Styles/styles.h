@@ -8,10 +8,8 @@
 
 namespace Styles
 {
-
     namespace Effects
     {
-
         inline QGraphicsDropShadowEffect* createShadow(QObject* parent = nullptr)
         {
             auto *shadow = new QGraphicsDropShadowEffect(parent);
@@ -29,8 +27,6 @@ namespace Styles
             shadow->setColor(QColor(0, 0, 0, 255));
             return shadow;
         }
-
-
 
         inline QGraphicsDropShadowEffect* outcome(QObject* parent = nullptr)
         {

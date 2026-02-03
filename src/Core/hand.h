@@ -2,6 +2,7 @@
 #define HAND_H
 
 #include <QVector>
+
 #include "carddata.h"
 
 struct HandCardEntry {

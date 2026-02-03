@@ -5,13 +5,10 @@
 #include <QPropertyAnimation>
 #include <QRandomGenerator>
 
-#include "../BettingPanel/bettingpanel.h"
-
 #include "../../../Core/blackjackgame.h"
-
 #include "../../Outcomes/outcome.h"
 #include "../../Dimmer/overlaywidget.h"
-
+#include "../BettingPanel/bettingpanel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -58,8 +55,6 @@ private slots:
 
     //void onDebugDealPlayer();
     //void onDebugDealDealer();
-
-
 
 private:
     void ConnectSignals();

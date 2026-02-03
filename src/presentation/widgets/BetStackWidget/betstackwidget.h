@@ -46,9 +46,8 @@ private:
     QStack<ChipData> m_chips;
     int m_totalAmount;
 
-
     QMap<int, QPixmap> m_pixmapCache;
-    const int CHIP_SIZE = 120; // мб сделат ькак с стилями и путями
+    const int CHIP_SIZE = 120;
     const int MAX_OFFSET = 4;
 };
 

@@ -15,22 +15,14 @@ public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
 
-
 private slots:
     void on_browseButton_clicked();
-
     void on_setNewDeckSkinButton_clicked();
-
     void on_setDefaultDeckSkinButton_clicked();
 
-
-
     void on_musicSlider_valueChanged(int value);
-
     void on_sfxSlider_valueChanged(int value);
-
     void on_muteButton_toggled(bool checked);
-
     void on_languageComboBox_currentIndexChanged(int index);
 
 protected:

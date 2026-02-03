@@ -1,5 +1,9 @@
 #include "draggableframe.h"
+
 #include <QPushButton>
+
+#include <windows.h>
+
 
 DraggableFrame::DraggableFrame(QWidget* parent)
     : QFrame(parent)

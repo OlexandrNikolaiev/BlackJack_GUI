@@ -2,6 +2,7 @@
 #define BLACKJACKGAME_H
 
 #include <QObject>
+
 #include "deck.h"
 #include "hand.h"
 #include "gamesession.h"
@@ -30,23 +31,19 @@ public:
     int getCurrentBet() const { return m_session.getBet(); }
 
 signals:
-
     // for animations
     void cardDealtToPlayer(Card::Suit suit, Card::Rank rank, int newScore);
     void cardDealtToDealer(Card::Suit suit, Card::Rank rank, bool isFaceUp, int newScore);
     void dealerTurnStarted();
 
+    void initialDealFinished();
+    void dealerCardRevealed(int index, int newScore);
     void roundFinished(GameResult result, int payoutAmount);
 
     void gameError(const QString& message);
 
-    void dealerCardRevealed(int index, int newScore);
-
-    void initialDealFinished();
-
 private:
     void runDealerTurn();
-
     void resolveRound();
 
     Deck m_deck;

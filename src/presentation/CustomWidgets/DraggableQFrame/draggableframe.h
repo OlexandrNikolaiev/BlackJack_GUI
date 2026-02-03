@@ -3,7 +3,6 @@
 
 #include <QFrame>
 #include <QMouseEvent>
-#include <windows.h>
 
 class DraggableFrame : public QFrame
 {

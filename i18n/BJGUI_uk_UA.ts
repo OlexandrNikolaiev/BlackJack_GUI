@@ -67,23 +67,23 @@
 ставку</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="42"/>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="263"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="45"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="240"/>
         <source>BlackJack</source>
         <translation>Блекджек</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="583"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="553"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="615"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="585"/>
         <source>Game Over</source>
         <translation>Кінець гри</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="615"/>
+        <location filename="../src/Presentation/Widgets/MainWindow/mainwindow.cpp" line="585"/>
         <source>You ran out of money! Reset balance to 1000?</source>
         <translation>Гроші закінчилися! Поповнити баланс до 1000?</translation>
     </message>
@@ -205,23 +205,23 @@
         <translation>Ефекти (карти, фішки тощо)</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="19"/>
-        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="133"/>
+        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="20"/>
+        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="130"/>
         <source>Settings</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="45"/>
+        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="46"/>
         <source>Select Card Skin Folder</source>
         <translation>Виберіть папку зі скінами</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="61"/>
+        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="62"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="61"/>
+        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="62"/>
         <source>Directory does not exist!</source>
         <translation>Папки не існує!</translation>
     </message>
@@ -240,11 +240,13 @@ Do you want to use it anyway? (Missing cards will use default skin)</source>
 Бажаєте продовжити? (Відсутні карти матимуть стандартний скін)</translation>
     </message>
     <message>
+        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="85"/>
         <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="94"/>
         <source>Success</source>
         <translation>Успіх</translation>
     </message>
     <message>
+        <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="85"/>
         <location filename="../src/Presentation/Widgets/Settings/settingswindow.cpp" line="94"/>
         <source>Skin updated successfully!</source>
         <translation>Скін успішно оновлено!</translation>

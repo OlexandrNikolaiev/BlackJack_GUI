@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QList>
+
 #include "../Card/cardwidget.h"
 
 class HandWidget : public QWidget

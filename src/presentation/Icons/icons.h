@@ -1,7 +1,6 @@
 #ifndef ICONSPACE_H
 #define ICONSPACE_H
 
-
 namespace Icon
 {
     namespace BettingPanel

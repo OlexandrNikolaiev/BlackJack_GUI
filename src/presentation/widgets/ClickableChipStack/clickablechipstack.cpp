@@ -1,6 +1,7 @@
 #include "clickablechipstack.h"
+
 #include <QGraphicsDropShadowEffect>
-#include <qpainter.h>
+#include <QPainter>
 
 #include "../../Styles/styles.h"
 
@@ -8,7 +9,6 @@ ClickableChipStack::ClickableChipStack(QWidget *parent)
     : QLabel(parent)
 {
     setScaledContents(true);
-
     setCursor(Qt::PointingHandCursor);
 
     Styles::Effects::applyShadow(this);
@@ -21,10 +21,7 @@ void ClickableChipStack::init(int value, const QString &imagePath)
     setPixmap(pixmap);
 }
 
-ClickableChipStack::~ClickableChipStack()
-{
-
-}
+ClickableChipStack::~ClickableChipStack() {}
 
 void ClickableChipStack::setAvailable(bool available)
 {

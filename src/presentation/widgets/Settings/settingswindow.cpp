@@ -5,6 +5,7 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 #include <QDir>
+
 #include "../../../Infrastructure/Service/skinmanager.h"
 #include "../../../Infrastructure/Service/audiomanager.h"
 #include "../../../Infrastructure/Helpers/settingshelper.h"
@@ -64,7 +65,6 @@ void SettingsWindow::on_setNewDeckSkinButton_clicked()
 
     bool hasBack = dir.exists("back.png");
     bool hasAce = dir.exists("ace_of_spades.png");
-    //
 
     QStringList pngFiles = dir.entryList(QStringList() << "*.png", QDir::Files);
 
@@ -82,7 +82,7 @@ void SettingsWindow::on_setNewDeckSkinButton_clicked()
     }
     SkinManager::instance().setSkinPath(path);
 
-    QMessageBox::information(this, "Success", "Skin updated successfully!");
+    QMessageBox::information(this, tr("Success"), tr("Skin updated successfully!"));
 }
 
 void SettingsWindow::on_setDefaultDeckSkinButton_clicked()
@@ -93,8 +93,6 @@ void SettingsWindow::on_setDefaultDeckSkinButton_clicked()
     ui->pathLineEdit->setText("DEFAULT");
     QMessageBox::information(this, tr("Success"), tr("Skin updated successfully!"));
 }
-
-
 
 void SettingsWindow::on_musicSlider_valueChanged(int position)
 {
@@ -112,7 +110,6 @@ void SettingsWindow::on_muteButton_toggled(bool checked)
 {
     AudioManager::instance().setMuted(checked);
 }
-
 
 void SettingsWindow::on_languageComboBox_currentIndexChanged(int index)
 {

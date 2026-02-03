@@ -1,4 +1,5 @@
 #include "skinmanager.h"
+
 #include <QDebug>
 #include <QFileInfo>
 

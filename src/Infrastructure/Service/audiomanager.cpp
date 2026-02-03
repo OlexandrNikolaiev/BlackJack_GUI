@@ -1,7 +1,8 @@
 #include "audiomanager.h"
-#include "../Helpers/settingshelper.h"
 
 #include <QUrl>
+
+#include "../Helpers/settingshelper.h"
 
 AudioManager& AudioManager::instance()
 {

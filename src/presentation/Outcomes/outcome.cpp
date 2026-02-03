@@ -1,7 +1,8 @@
 #include "outcome.h"
-#include "ui_outcome.h"
+
 #include <QGraphicsDropShadowEffect>
 
+#include "ui_outcome.h"
 #include "../Styles/styles.h"
 
 Outcome::Outcome(QWidget *parent)
@@ -11,7 +12,6 @@ Outcome::Outcome(QWidget *parent)
     ui->setupUi(this);
 
     Styles::Effects::applyShadowOutcome(this);
-
 
     hide();
 }

@@ -1,14 +1,13 @@
 #include "blackjackgame.h"
+
+#include <QTimer>
+#include <QTimer>
+#include <QDebug>
+#include <QEventLoop>
+
 #include "../Infrastructure/Service/balancemanager.h"
-#include <QTimer>
-#include <QTimer>
-#include <qdebug.h>
-#include <qeventloop.h>
 
-BlackjackGame::BlackjackGame(QObject *parent) : QObject(parent)
-{
-
-}
+BlackjackGame::BlackjackGame(QObject *parent) : QObject(parent) {}
 
 void BlackjackGame::startRound(int betAmount)
 {

@@ -1,12 +1,12 @@
 #include "handwidget.h"
+
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QRandomGenerator>
-#include <qtimer.h>
+#include <QTimer>
 
-#include "../../Styles/styles.h"
 #include "../../../Infrastructure/Service/audiomanager.h"
-
+#include "../../Styles/styles.h"
 
 HandWidget::HandWidget(QWidget *parent) : QWidget(parent)
 {
@@ -35,10 +35,6 @@ void HandWidget::addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint 
     realCard->setCardData(suit, rank, faceUp);
     // will be shown after animation
     realCard->hide();
-
-    // connect(realCard, &CardWidget::flipped, this, [this](){
-    //     // todo
-    // });
 
     m_cards.append(realCard);
     // realCard will get its coordinates (targetPos), and the old cards will be shifted to the left
@@ -105,7 +101,6 @@ void HandWidget::flipCard(int index, int totalScore)
         m_cards[index]->flipAnimated();
     }
     AudioManager::instance().playSound("flip_card", "qrc:/audio/res/audio/flip_card.wav");
-    //emit scoreChanged(calculateScore());
     emit scoreChanged(totalScore);
 }
 

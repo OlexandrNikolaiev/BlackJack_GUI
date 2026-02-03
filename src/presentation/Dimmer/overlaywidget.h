@@ -7,7 +7,7 @@
 class OverlayWidget : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY(qreal vignetteStrength READ vignetteStrength WRITE setVignetteStrength)
+    Q_PROPERTY(qreal vignetteStrength READ vignetteStrength WRITE setVignetteStrength) // overlaywidget.cpp
 
 public:
     explicit OverlayWidget(QWidget *parent = nullptr);

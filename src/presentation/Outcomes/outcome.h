@@ -2,6 +2,7 @@
 #define OUTCOME_H
 
 #include <QWidget>
+
 #include "../../Core/blackjackgame.h"
 
 namespace Ui {

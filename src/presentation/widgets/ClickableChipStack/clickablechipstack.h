@@ -29,7 +29,6 @@ protected:
     void leaveEvent(QEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
-
 private:
     int m_value;
     bool m_isAvailable = true;

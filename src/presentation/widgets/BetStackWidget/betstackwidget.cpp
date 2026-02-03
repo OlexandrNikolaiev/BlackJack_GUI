@@ -1,4 +1,5 @@
 #include "betstackwidget.h"
+
 #include <QPainter>
 #include <QMouseEvent>
 #include <QTimer>
@@ -6,7 +7,6 @@
 
 #include "../../Icons/icons.h"
 #include "../../../Infrastructure/Service/audiomanager.h"
-
 
 BetStackWidget::BetStackWidget(QWidget *parent)
     : QWidget(parent)
@@ -54,17 +54,12 @@ void BetStackWidget::addChipAnimated(int value, const QPoint &startGlobalPos)
     anim->start(QAbstractAnimation::DeleteWhenStopped);
     setCursor(Qt::PointingHandCursor);
     AudioManager::instance().playSound("chip", "qrc:/audio/res/audio/chip.wav");
-
 }
 
 void BetStackWidget::removeTopChipAnimated(const QPoint &endGlobalPos)
 {
     if (m_chips.isEmpty())
         return;
-
-
-
-
 
     ChipData chip = m_chips.pop();
     m_totalAmount -= chip.value;
@@ -115,7 +110,6 @@ void BetStackWidget::addChipInternal(int value, double offsetX, double offsetY, 
     data.rotation = rotation;
 
     m_chips.push(data);
-
 
     update();
 }

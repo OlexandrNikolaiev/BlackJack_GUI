@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QPair>
+
 #include "CardData.h"
 
 using CardInfo = QPair<Card::Suit, Card::Rank>;
@@ -13,7 +14,6 @@ public:
     Deck();
 
     void fill();
-
     void shuffle();
 
     CardInfo draw();

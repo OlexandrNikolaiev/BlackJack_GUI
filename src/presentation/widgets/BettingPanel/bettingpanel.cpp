@@ -1,10 +1,10 @@
 #include "bettingpanel.h"
-#include "ui_bettingpanel.h"
 
+#include "../../../Infrastructure/Service/balancemanager.h"
 #include "../../Styles/styles.h"
 #include "../../Icons/icons.h"
-#include "../../../Infrastructure/Service/balancemanager.h"
 
+#include "ui_bettingpanel.h"
 
 BettingPanel::BettingPanel(QWidget *parent)
     : QWidget(parent)
@@ -38,8 +38,6 @@ BettingPanel::BettingPanel(QWidget *parent)
     ui->bankBalanceLabel->setText(QString("$%1").arg(BalanceManager::instance().getBalance()));
 
     qDebug()<<this->size();
-
-    //Styles::Effects::applyShadowBetting(this);
 }
 
 BettingPanel::~BettingPanel()
@@ -97,6 +95,5 @@ void BettingPanel::changeEvent(QEvent *event)
 
 void BettingPanel::applyShadowEffect()
 {
-    //Styles::Effects::applyShadow(this); додати слой под тень як у мейгвиндов
     Styles::Effects::applyShadow(ui->allInButton);
 }

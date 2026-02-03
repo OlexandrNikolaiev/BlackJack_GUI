@@ -5,6 +5,7 @@
 #include <QTranslator>
 #include <QApplication>
 #include <QDebug>
+
 #include "settingshelper.h"
 
 class LanguageHelper : public QObject

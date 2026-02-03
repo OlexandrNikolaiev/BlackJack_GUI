@@ -1,12 +1,10 @@
 #include "gamesession.h"
-#include <cmath>
 
 #include <QDebug>
 
 GameSession::GameSession()
     : m_currentBet(0)
-{
-}
+{}
 
 void GameSession::addBet(int amount)
 {

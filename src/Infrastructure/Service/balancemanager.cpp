@@ -1,7 +1,8 @@
 #include "balancemanager.h"
-#include "../Helpers/settingshelper.h"
 
 #include <QDebug>
+
+#include "../Helpers/settingshelper.h"
 
 BalanceManager& BalanceManager::instance()
 {

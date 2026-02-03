@@ -1,7 +1,9 @@
 #include "cardwidget.h"
+
 #include <QPainter>
 #include <QtMath>
 #include <QPropertyAnimation>
+
 #include "../../../Infrastructure/Service/skinmanager.h"
 
 CardWidget::CardWidget(QWidget *parent)
@@ -62,8 +64,6 @@ void CardWidget::flipAnimated()
     connect(anim, &QPropertyAnimation::finished, this, &CardWidget::onFlipHalfFinished);
     anim->start(QAbstractAnimation::DeleteWhenStopped);
 }
-
-
 
 void CardWidget::onFlipHalfFinished()
 {

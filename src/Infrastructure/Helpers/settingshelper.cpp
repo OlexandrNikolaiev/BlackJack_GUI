@@ -1,8 +1,5 @@
 #include "settingshelper.h"
 
-static const QString ORG_NAME = "MyGame";
-static const QString APP_NAME = "BlackJack";
-
 void SettingsHelper::setValue(const QString &key, const QVariant &value)
 {
     QSettings settings("settings.ini", QSettings::IniFormat);

@@ -14,7 +14,6 @@ public:
     static AudioManager& instance();
 
     void playBackgroundMusic(const QString& path);
-
     void playSound(const QString& name, const QString& path);
 
     void setMusicVolume(float volume);

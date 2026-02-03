@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPixmap>
+
 #include "../../../Core/CardData.h"
 
 class CardWidget : public QWidget
@@ -19,7 +20,6 @@ public:
 
     void flipAnimated();
     bool isFaceUp() const { return m_isFaceUp; }
-
 
     qreal rotation() const { return m_rotation; }
     void setRotation(qreal rotation);

@@ -1,5 +1,6 @@
 #include "hand.h"
-#include <qdebug.h>
+
+#include <QDebug>
 
 Hand::Hand()
 {

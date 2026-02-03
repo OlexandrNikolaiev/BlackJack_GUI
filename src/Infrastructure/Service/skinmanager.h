@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QMap>
 #include <QDir>
+
 #include "../../Core/CardData.h"
 
 class SkinManager : public QObject
@@ -19,7 +20,7 @@ public:
     const QPixmap& getCardPixmap(Card::Suit suit, Card::Rank rank);
     const QPixmap& getBackPixmap();
 
-    QString getDefaultPath() const {return m_defaultPath;}
+    QString getDefaultPath() const { return m_defaultPath; }
 
 signals:
     void skinChanged();

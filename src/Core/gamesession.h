@@ -7,11 +7,8 @@ public:
     GameSession();
 
     void addBet(int amount);
-
     void clearBet();
-
     int getBet() const;
-
     int calculatePayout(double ratio) const;
 
 private:

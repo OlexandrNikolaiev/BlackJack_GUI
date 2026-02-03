@@ -1,19 +1,20 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
-#include "../../Styles/styles.h"
-#include "../ClickableChipStack/clickablechipstack.h"
-#include "../../../Infrastructure/Service/balancemanager.h"
-#include "../Settings/settingswindow.h"
-#include "../../../Infrastructure/Service/audiomanager.h"
-#include "../../../Infrastructure/Helpers/settingshelper.h"
-#include "../../../Core/chipcalculator.h"
-
 
 #include <QTimer>
+#include <QMessageBox>
+
 #include <windows.h>
 #include <windowsx.h>
 #include <dwmapi.h>
-#include <QMessageBox>
+
+#include "../../../Infrastructure/Service/balancemanager.h"
+#include "../../../Infrastructure/Service/audiomanager.h"
+#include "../../../Infrastructure/Helpers/settingshelper.h"
+#include "../../../Core/chipcalculator.h"
+#include "../../Styles/styles.h"
+#include "../ClickableChipStack/clickablechipstack.h"
+#include "../Settings/settingswindow.h"
+#include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -40,10 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_Player->hide();
 
     applyShadowEffect();
+    updateStyles();
     setWindowTitle(tr("BlackJack"));
 
-
-    updateStyles();
     AudioManager::instance().playBackgroundMusic("qrc:/audio/res/audio/background_gtasa_music.mp3");
 }
 
@@ -78,7 +78,6 @@ void MainWindow::ConnectSignals()
         showBettingPanel();
     });
 
-
     connect(ui->playerHandWidget, &HandWidget::scoreChanged, this, [this](int score){
         ui->playerScoreLabel->setText(QString::number(score));
     });
@@ -91,8 +90,6 @@ void MainWindow::ConnectSignals()
         ui->hitButton->setEnabled(true);
         ui->standButton->setEnabled(true);
     });
-
-
 
     // CONTROLLER
     connect(m_game, &BlackjackGame::cardDealtToPlayer, this, &MainWindow::onCardDealtToPlayer);
@@ -110,7 +107,6 @@ void MainWindow::ConnectSignals()
     // connect(ui->flipButton, &QPushButton::clicked, this, [this](){
     //     ui->dealerHandWidget->flipCard(0);
     // });
-
 }
 
 void MainWindow::CloseWindow()
@@ -149,7 +145,6 @@ void MainWindow::setupBettingPanel()
         checkChipsAvailability(amount);
     });
 
-
     for (const QString &name : chipNames) {
         auto *chipBtn = m_bettingPanel->findChild<ClickableChipStack*>(name);
         if (chipBtn) {
@@ -165,18 +160,7 @@ void MainWindow::setupBettingPanel()
 
     m_panelContainer->hide();
     m_bettingPanel->hide();
-
-    // connect(m_panelAnimation, &QPropertyAnimation::finished, this, [this](){
-    //     if (!m_isPanelVisible) {
-    //         m_panelContainer->hide();
-    //     }
-    // });
-
-    //Styles::Effects::applyShadowBetting(m_panelContainer);
-
 }
-
-
 
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qint64 *result)
 {
@@ -220,8 +204,6 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qint64 
     return QWidget::nativeEvent(eventType, message, result);
 }
 
-
-
 void MainWindow::applyShadowEffect()
 {
     Styles::Effects::applyShadow(ui->MainFrame);
@@ -232,15 +214,9 @@ void MainWindow::applyShadowEffect()
     Styles::Effects::applyShadow(ui->hitButton);
     Styles::Effects::applyShadow(ui->collapseButton);
     Styles::Effects::applyShadow(ui->closeButton);
-    //Styles::Effects::applyShadow(m_bettingPanel);
     Styles::Effects::applyShadow(ui->playButton);
     Styles::Effects::applyShadow(ui->dealButton);
-
-
-
 }
-
-
 
 void MainWindow::changeEvent(QEvent *event)
 {
@@ -264,7 +240,6 @@ void MainWindow::changeEvent(QEvent *event)
         setWindowTitle(tr("BlackJack"));
 
         updateStyles();
-
     }
 }
 
@@ -323,8 +298,7 @@ void MainWindow::showBettingPanel()
     m_panelAnimation->start();
 
     m_panelContainer->setAttribute(Qt::WA_TransparentForMouseEvents, false);
-
-    ui->betStackWidget_betting->clearStack();
+    ui->betStackWidget_betting->clearStack(); // might need to move from here
 
     checkChipsAvailability(0);
 
@@ -374,12 +348,10 @@ void MainWindow::onChipClicked(int value)
 
 void MainWindow::updateBetLabel(int amount)
 {
-    if (amount < 1)
-    {
+    if (amount < 1) {
         ui->betAmountLabel_betting->hide();
     }
-    else
-    {
+    else {
         ui->betAmountLabel_betting->show();
     }
     QString text = "$" + QString::number(amount);
@@ -450,7 +422,7 @@ void MainWindow::onDealClicked()
     ui->hitButton->hide();
     ui->standButton->hide();
 
-    QTimer::singleShot(1200, this, [this, bet](){
+    QTimer::singleShot(900, this, [this, bet](){
         m_game->startRound(bet);
     });
 }
@@ -571,7 +543,7 @@ void MainWindow::onRoundFinished(BlackjackGame::GameResult result, int payout)
             AudioManager::instance().playSound(msgKeyMassage, soundPath);
         }
 
-        int delay = lose ? 4500 : 3500; // delay for lose sound is 4500
+        int delay = lose ? 4000 : 3500; // delay for lose sound is 4000
         QTimer::singleShot(delay, this, &MainWindow::resetGameAndShowBetting);
     });
 }
@@ -605,12 +577,14 @@ void MainWindow::resetGameAndShowBetting()
     ui->label_Player->hide();
 
     int balance = BalanceManager::instance().getBalance();
-    int minBet = 10;
+    int minBet = 10;     // create a global namespace for this and not just for this since the game has many parameters that
+                        // can be changed for different game modes in the future"
 
     if (balance < minBet) {
-        // GAME OVER
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, tr("Game Over"), tr("You ran out of money! Reset balance to 1000?"), QMessageBox::Yes|QMessageBox::No);
+        reply = QMessageBox::question(this, tr("Game Over"), tr("You ran out of money! Reset balance to 1000?"),
+                                      QMessageBox::Yes|QMessageBox::No);
+
         if (reply == QMessageBox::Yes) {
             BalanceManager::instance().resetToDefault();
             showBettingPanel();
@@ -620,9 +594,7 @@ void MainWindow::resetGameAndShowBetting()
         }
     } else {
         showBettingPanel();
-
         checkChipsAvailability(0);
-
         ui->stackedWidget->slideInWgt(ui->betting, SlidingStackedWidget::LEFT2RIGHT);
     }
 }
@@ -636,7 +608,7 @@ void MainWindow::checkChipsAvailability(int currentBetOnTable)
         m_bettingPanel->updateChipsAvailability(remainingFunds);
         m_bettingPanel->setDisplayedBalance(remainingFunds);
 
-        m_bettingPanel->setAllInEnabled(remainingFunds > 0);
+        m_bettingPanel->setAllInEnabled(remainingFunds > 9); // again, need global namespace for parameters
     }
 }
 
@@ -649,15 +621,10 @@ void MainWindow::updateStyles()
     if (currentLang == "uk_UA") {
         hitPadding = 10;
         standPadding = 30;
-    } /*else if (currentLang == "en_US") {
-        qDebug()<<"if else";
-        hitPadding = 30;
-        standPadding = 15;
-    }*/
+    }
 
     ui->hitButton->setStyleSheet(Styles::UIElements::getHitButtonStyle(hitPadding));
     ui->standButton->setStyleSheet(Styles::UIElements::getStandButtonStyle(standPadding));
-
 }
 
 void MainWindow::onAllInClicked()
@@ -680,9 +647,6 @@ void MainWindow::onAllInClicked()
 void MainWindow::openSettings()
 {
     SettingsWindow settingsDialog(this);
-
     settingsDialog.exec();
-
-    qDebug() << "Settings closed";
 }
 

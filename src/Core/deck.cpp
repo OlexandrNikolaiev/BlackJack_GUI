@@ -1,8 +1,8 @@
 #include "deck.h"
+
 #include <QRandomGenerator>
 #include <algorithm>
-#include <qdebug.h>
-#include <random>
+#include <QDebug>
 
 Deck::Deck()
 {
@@ -38,7 +38,6 @@ CardInfo Deck::draw()
     }
 
     CardInfo card = m_cards.last();
-
     qDebug()<<"taking "<<m_cards.last();
     m_cards.removeLast();
 
