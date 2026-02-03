@@ -28,6 +28,9 @@ signals:
 private slots:
     void onBalanceChanged(int newBalance);
 
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
     void applyShadowEffect();
     Ui::BettingPanel *ui;

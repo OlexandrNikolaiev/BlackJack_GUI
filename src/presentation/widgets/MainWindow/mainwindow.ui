@@ -532,7 +532,7 @@ border: 1px solid yellow;
                      <string notr="true">color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="text">
-                     <string>$11,500</string>
+                     <string notr="true">$11,500</string>
                     </property>
                    </widget>
                   </item>
@@ -625,7 +625,7 @@ border: 1px solid yellow;
 }</string>
                       </property>
                       <property name="text">
-                       <string/>
+                       <string notr="true"/>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -818,7 +818,7 @@ QToolButton:pressed {
 }</string>
                       </property>
                       <property name="text">
-                       <string/>
+                       <string notr="true"/>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -1109,7 +1109,7 @@ QToolButton:pressed {
                      <string notr="true">color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="text">
-                     <string>$11,500</string>
+                     <string notr="true">$11,500</string>
                     </property>
                    </widget>
                   </item>

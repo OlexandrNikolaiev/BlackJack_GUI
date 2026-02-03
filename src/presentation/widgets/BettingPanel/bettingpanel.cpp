@@ -83,6 +83,18 @@ void BettingPanel::onBalanceChanged(int newBalance)
     ui->bankBalanceLabel->setText(QString("$%1").arg(newBalance));
 }
 
+void BettingPanel::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+
+        int currentBalance = BalanceManager::instance().getBalance();
+        ui->bankBalanceLabel->setText(QString("$%1").arg(currentBalance));
+    }
+
+    QWidget::changeEvent(event);
+}
+
 void BettingPanel::applyShadowEffect()
 {
     //Styles::Effects::applyShadow(this); додати слой под тень як у мейгвиндов

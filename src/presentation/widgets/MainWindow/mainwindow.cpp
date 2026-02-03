@@ -5,6 +5,8 @@
 #include "../../../Infrastructure/Service/balancemanager.h"
 #include "../Settings/settingswindow.h"
 #include "../../../Infrastructure/Service/audiomanager.h"
+#include "../../../Infrastructure/Helpers/settingshelper.h"
+
 
 #include <QTimer>
 #include <windows.h>
@@ -37,9 +39,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_Player->hide();
 
     applyShadowEffect();
-    setWindowTitle("Black Jack");
+    setWindowTitle(tr("BlackJack"));
 
 
+    updateStyles();
     AudioManager::instance().playBackgroundMusic("qrc:/audio/res/audio/background_gtasa_music.mp3");
 }
 
@@ -249,6 +252,15 @@ void MainWindow::changeEvent(QEvent *event)
                          SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
 #endif
         }
+    }
+
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+
+        setWindowTitle(tr("BlackJack"));
+
+        updateStyles();
+
     }
 }
 
@@ -560,7 +572,7 @@ void MainWindow::onRoundFinished(BlackjackGame::GameResult result, int payout)
 
 void MainWindow::onGameError(const QString &message)
 {
-    QMessageBox::warning(this, "Error", message);
+    QMessageBox::warning(this, tr("Error"), message);
 }
 
 void MainWindow::resetGameAndShowBetting()
@@ -592,7 +604,7 @@ void MainWindow::resetGameAndShowBetting()
     if (balance < minBet) {
         // GAME OVER
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Game Over", "You ran out of money! Reset balance to 1000?", QMessageBox::Yes|QMessageBox::No);
+        reply = QMessageBox::question(this, tr("Game Over"), tr("You ran out of money! Reset balance to 1000?"), QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
             BalanceManager::instance().resetToDefault();
             showBettingPanel();
@@ -620,6 +632,26 @@ void MainWindow::checkChipsAvailability(int currentBetOnTable)
 
         m_bettingPanel->setAllInEnabled(remainingFunds > 0);
     }
+}
+
+void MainWindow::updateStyles()
+{
+    QString currentLang = SettingsHelper::getValue("language", "en_US").toString();
+
+    int hitPadding = 30;
+    int standPadding = 15;
+    if (currentLang == "uk_UA") {
+        hitPadding = 10;
+        standPadding = 30;
+    } /*else if (currentLang == "en_US") {
+        qDebug()<<"if else";
+        hitPadding = 30;
+        standPadding = 15;
+    }*/
+
+    ui->hitButton->setStyleSheet(Styles::UIElements::getHitButtonStyle(hitPadding));
+    ui->standButton->setStyleSheet(Styles::UIElements::getStandButtonStyle(standPadding));
+
 }
 
 void MainWindow::onAllInClicked()

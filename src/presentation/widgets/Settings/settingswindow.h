@@ -31,6 +31,11 @@ private slots:
 
     void on_muteButton_toggled(bool checked);
 
+    void on_languageComboBox_currentIndexChanged(int index);
+
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
     Ui::SettingsWindow *ui;
 };

@@ -12,7 +12,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Multimedia)
 
-set(TS_FILES res/translations/BJGUI_en_150.ts)
+set(TS_FILES
+    i18n/BJGUI_uk_UA.ts
+    i18n/BJGUI_en_US.ts
+)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -57,11 +60,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         src/Presentation/Outcomes/outcome.h src/Presentation/Outcomes/outcome.cpp src/Presentation/Outcomes/outcome.ui
         src/Presentation/Dimmer/overlaywidget.h src/Presentation/Dimmer/overlaywidget.cpp
+        src/Infrastructure/Helpers/languagehelper.h
 
     )
     qt_add_translations(BJGUI
-            TS_FILES ${TS_FILES}
-            RESOURCE_PREFIX "/i18n"
+        TS_FILES ${TS_FILES}
+        RESOURCE_PREFIX "/i18n"
+        LUPDATE_OPTIONS "-no-obsolete"
     )
 endif()
 

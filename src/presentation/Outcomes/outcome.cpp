@@ -32,21 +32,28 @@ void Outcome::setGameResult(BlackjackGame::GameResult result, int payout)
     case BlackjackGame::PlayerWin:
     case BlackjackGame::PlayerBlackjack:
     case BlackjackGame::DealerBust:
-        text = (result == BlackjackGame::PlayerBlackjack) ? "BLACKJACK!" : "YOU WON!";
-        if (payout > 0)
-            //text += QString("\n+$%1").arg(payout);
+        if (result == BlackjackGame::PlayerBlackjack)
+            text = tr("BLACKJACK!");
+        else if (result == BlackjackGame::DealerBust)
+            text = tr("DEALER BUST! YOU WON!");
+        else
+            text = tr("YOU WON!");
+
         style = QString("#frame { border-image: url(%1player_won.png) 10 10 10 10 stretch; }").arg(bgPath);
         break;
 
     case BlackjackGame::DealerWin:
-    case BlackjackGame::PlayerBust:
-        text = (result == BlackjackGame::PlayerBust) ? "BUSTED" : "DEALER WINS";
+        text = tr("DEALER WINS");
         style = QString("#frame { border-image: url(%1dealer_won.png) 10 10 10 10 stretch; }").arg(bgPath);
         break;
 
+    case BlackjackGame::PlayerBust:
+        text = tr("BUSTED");
+        style = QString("#frame { border-image: url(%1bust.png) 10 10 10 10 stretch; }").arg(bgPath);
+        break;
+
     case BlackjackGame::Push:
-        text = "PUSH (TIE)";
-        //text += QString("\nReturned: $%1").arg(payout);
+        text = tr("PUSH (TIE)");
         style = QString("#frame { border-image: url(%1bust.png) 10 10 10 10 stretch; }").arg(bgPath);
         break;
     }

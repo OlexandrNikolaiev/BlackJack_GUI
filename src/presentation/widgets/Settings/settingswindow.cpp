@@ -7,6 +7,8 @@
 #include <QDir>
 #include "../../../Infrastructure/Service/skinmanager.h"
 #include "../../../Infrastructure/Service/audiomanager.h"
+#include "../../../Infrastructure/Helpers/settingshelper.h"
+#include "../../../Infrastructure/Helpers/languagehelper.h"
 
 SettingsWindow::SettingsWindow(QWidget *parent)
     : QDialog(parent)
@@ -14,7 +16,7 @@ SettingsWindow::SettingsWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
-    setWindowTitle("Settings");
+    setWindowTitle(tr("Settings"));
 
     ui->pathLineEdit->setText(SkinManager::instance().getCurrentPath());
 
@@ -27,6 +29,9 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     ui->effectsValueLabel->setText(QString::number(sfxVal) + "%");
 
     ui->muteButton->setChecked(AudioManager::instance().isMuted());
+
+    QString savedLang = SettingsHelper::getValue("language", "en_US").toString();
+    ui->languageComboBox->setCurrentIndex(savedLang == "uk_UA" ? 1 : 0);
 }
 
 SettingsWindow::~SettingsWindow()
@@ -53,7 +58,7 @@ void SettingsWindow::on_setNewDeckSkinButton_clicked()
 
     QDir dir(path);
     if (!dir.exists()) {
-        QMessageBox::warning(this, "Error", "Directory does not exist!");
+        QMessageBox::warning(this, tr("Error"), tr("Directory does not exist!"));
         return;
     }
 
@@ -65,10 +70,10 @@ void SettingsWindow::on_setNewDeckSkinButton_clicked()
 
     if (!hasBack && !hasAce && pngFiles.isEmpty()) {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Warning",
-                                      "This folder doesn't seem to contain card images "
+        reply = QMessageBox::question(this, tr("Warning"),
+                                      tr("This folder doesn't seem to contain card images "
                                       "(e.g. 'back.png', 'ace_of_spades.png').\n\n"
-                                      "Do you want to use it anyway? (Missing cards will use default skin)",
+                                      "Do you want to use it anyway? (Missing cards will use default skin)"),
                                       QMessageBox::Yes|QMessageBox::No);
 
         if (reply == QMessageBox::No) {
@@ -86,7 +91,7 @@ void SettingsWindow::on_setDefaultDeckSkinButton_clicked()
     SkinManager::instance().setSkinPath(defaultPath);
 
     ui->pathLineEdit->setText("DEFAULT");
-    QMessageBox::information(this, "Success", "Skin updated successfully!");
+    QMessageBox::information(this, tr("Success"), tr("Skin updated successfully!"));
 }
 
 
@@ -106,5 +111,27 @@ void SettingsWindow::on_sfxSlider_valueChanged(int position)
 void SettingsWindow::on_muteButton_toggled(bool checked)
 {
     AudioManager::instance().setMuted(checked);
+}
+
+
+void SettingsWindow::on_languageComboBox_currentIndexChanged(int index)
+{
+    QString code;
+    if (index == 1) {
+        code = "uk_UA";
+    } else {
+        code = "en_US";
+    }
+
+    LanguageHelper::instance().setLanguage(code);
+}
+
+void SettingsWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        setWindowTitle(tr("Settings"));
+    }
+    QDialog::changeEvent(event);
 }
 

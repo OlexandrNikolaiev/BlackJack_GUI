@@ -66,6 +66,7 @@ private:
     void CollapseWindow();
     void setupBettingPanel();
     void checkChipsAvailability(int currentBetOnTable);
+    void updateStyles();
 
     BlackjackGame* m_game;
 
@@ -80,4 +81,5 @@ private:
     int mBorderSize;
     Ui::MainWindow *ui;
 };
+
 #endif // MAINWINDOW_H
