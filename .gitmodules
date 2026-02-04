@@ -1,0 +1,3 @@
+[submodule "Blackjack-CLI"]
+	path = Blackjack-CLI
+	url = https://github.com/OlexandrNikolaiev/BlackJack.git

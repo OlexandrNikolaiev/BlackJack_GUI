@@ -50,7 +50,7 @@ void HandWidget::addCardAnimated(Card::Suit suit, Card::Rank rank, const QPoint 
     CardWidget* ghostCard = new CardWidget(window());
     ghostCard->setCardData(suit, rank, faceUp);
 
-    // this shoe logic explained in docs/shoeCoordinates.png
+    // this shoe logic explained in docs/dev/shoeCoordinates.png
     QPoint startPosCentered = window()->mapFromGlobal(startGlobalPos) - QPoint(ghostCard->width()/2, ghostCard->height()/2);
 
     ghostCard->move(startPosCentered);
