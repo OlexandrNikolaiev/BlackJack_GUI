@@ -4,7 +4,7 @@
 #include <QVector>
 #include <QPair>
 
-#include "CardData.h"
+#include "carddata.h"
 
 using CardInfo = QPair<Card::Suit, Card::Rank>;
 

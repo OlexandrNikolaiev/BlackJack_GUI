@@ -6,7 +6,7 @@
 #include <QMap>
 #include <QDir>
 
-#include "../../Core/CardData.h"
+#include "../../Core/carddata.h"
 
 class SkinManager : public QObject
 {

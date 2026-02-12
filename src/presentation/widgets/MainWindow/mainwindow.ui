@@ -37,6 +37,9 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>9</number>
+    </property>
     <item row="0" column="0">
      <widget class="DraggableFrame" name="MainFrame">
       <property name="styleSheet">

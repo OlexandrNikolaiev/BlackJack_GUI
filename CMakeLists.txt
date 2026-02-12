@@ -30,6 +30,9 @@ set(PROJECT_SOURCES
         ${TS_FILES}
 )
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/presentation/CustomWidgets)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/presentation/widgets)
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(BJGUI
         MANUAL_FINALIZATION
@@ -47,19 +50,19 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Infrastructure/StateMachine/States/introstate.h src/Infrastructure/StateMachine/States/introstate.cpp
         src/Infrastructure/StateMachine/States/bettingstate.h src/Infrastructure/StateMachine/States/bettingstate.cpp
         src/Infrastructure/Service/skinmanager.h src/Infrastructure/Service/skinmanager.cpp
-        src/Presentation/Widgets/BetStackWidget/betstackwidget.h src/Presentation/Widgets/BetStackWidget/betstackwidget.cpp
+        src/presentation/widgets/BetStackWidget/betstackwidget.h src/presentation/widgets/BetStackWidget/betstackwidget.cpp
         src/Core/carddata.h
-        src/Presentation/Widgets/Card/cardwidget.h src/Presentation/Widgets/Card/cardwidget.cpp
-        src/Presentation/Widgets/Hand/handwidget.h src/Presentation/Widgets/Hand/handwidget.cpp
+        src/presentation/widgets/Card/cardwidget.h src/presentation/widgets/Card/cardwidget.cpp
+        src/presentation/widgets/Hand/handwidget.h src/presentation/widgets/Hand/handwidget.cpp
         src/Infrastructure/Service/balancemanager.h src/Infrastructure/Service/balancemanager.cpp
-        src/Presentation/Widgets/Settings/settingswindow.h src/Presentation/Widgets/Settings/settingswindow.cpp src/Presentation/Widgets/Settings/settingswindow.ui
+        src/presentation/widgets/Settings/settingswindow.h src/presentation/widgets/Settings/settingswindow.cpp src/presentation/widgets/Settings/settingswindow.ui
         src/Infrastructure/Helpers/settingshelper.h src/Infrastructure/Helpers/settingshelper.cpp
         src/Infrastructure/Service/audiomanager.h src/Infrastructure/Service/audiomanager.cpp
         src/Core/gamesession.h src/Core/gamesession.cpp
         src/Core/blackjackgame.h src/Core/blackjackgame.cpp
 
-        src/Presentation/Outcomes/outcome.h src/Presentation/Outcomes/outcome.cpp src/Presentation/Outcomes/outcome.ui
-        src/Presentation/Dimmer/overlaywidget.h src/Presentation/Dimmer/overlaywidget.cpp
+        src/presentation/Outcomes/outcome.h src/presentation/Outcomes/outcome.cpp src/presentation/Outcomes/outcome.ui
+        src/presentation/Dimmer/overlaywidget.h src/presentation/Dimmer/overlaywidget.cpp
         src/Infrastructure/Helpers/languagehelper.h
         src/Core/chipcalculator.h src/Core/chipcalculator.cpp
 

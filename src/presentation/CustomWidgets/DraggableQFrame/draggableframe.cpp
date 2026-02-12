@@ -2,7 +2,9 @@
 
 #include <QPushButton>
 
+#ifdef Q_OS_WINDOWS
 #include <windows.h>
+#endif
 
 
 DraggableFrame::DraggableFrame(QWidget* parent)
@@ -12,11 +14,15 @@ DraggableFrame::DraggableFrame(QWidget* parent)
 }
 
 void DraggableFrame::makeWindowTopMost(QWidget *w) {
+#ifdef Q_OS_WINDOWS
     HWND hwnd = reinterpret_cast<HWND>(w->winId());
     SetWindowPos(hwnd,
                  HWND_TOPMOST,
                  0, 0, 0, 0,
                  SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+#else
+    w->raise();
+#endif
 }
 
 void DraggableFrame::mousePressEvent(QMouseEvent* event)

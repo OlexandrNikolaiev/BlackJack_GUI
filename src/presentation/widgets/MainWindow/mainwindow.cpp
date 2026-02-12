@@ -3,9 +3,11 @@
 #include <QTimer>
 #include <QMessageBox>
 
+#ifdef Q_OS_WINDOWS
 #include <windows.h>
 #include <windowsx.h>
 #include <dwmapi.h>
+#endif
 
 #include "../../../Infrastructure/Service/balancemanager.h"
 #include "../../../Infrastructure/Service/audiomanager.h"
@@ -23,7 +25,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    QLayout* layout = ui->centralwidget->layout();
+
+    if (layout) {
+#ifdef Q_OS_LINUX
+        layout->setContentsMargins(0, 0, 0, 0);
+        ui->closeButton->hide();
+        ui->collapseButton->hide();
+#elif defined(Q_OS_WINDOWS)
+        setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+#endif
+        layout->setSpacing(6);
+    }
+
     setAttribute(Qt::WA_TranslucentBackground);
     mBorderSize = 20;
 
@@ -162,6 +176,7 @@ void MainWindow::setupBettingPanel()
     m_bettingPanel->hide();
 }
 
+#ifdef Q_OS_WINDOWS
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qint64 *result)
 {
     Q_UNUSED(eventType)
@@ -203,6 +218,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qint64 
 
     return QWidget::nativeEvent(eventType, message, result);
 }
+#endif
 
 void MainWindow::applyShadowEffect()
 {
@@ -262,11 +278,15 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     if (m_bettingPanel && m_panelContainer) {
         int panelWidth = 701;
         int panelHeight = 395;
+
+    int h = height();
         int margin = 17;
 
-        int h = height();
-
+#ifdef Q_OS_LINUX
+        int containerY = h - panelHeight + margin/2;
+#elif defined(Q_OS_WINDOWS)
         int containerY = h - panelHeight - 1;
+#endif
         int containerH = panelHeight;
 
         m_panelContainer->setGeometry(margin, containerY, panelWidth, containerH);

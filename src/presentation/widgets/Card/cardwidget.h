@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPixmap>
 
-#include "../../../Core/CardData.h"
+#include "../../../Core/carddata.h"
 
 class CardWidget : public QWidget
 {

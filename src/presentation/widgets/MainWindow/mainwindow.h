@@ -25,7 +25,9 @@ public:
     ~MainWindow();
 
 protected:
+#ifdef Q_OS_WINDOWS
     bool nativeEvent(const QByteArray &eventType, void *message, qint64 *result) override;
+#endif
     void changeEvent(QEvent* event) override;
     void resizeEvent(QResizeEvent *event) override;
 
